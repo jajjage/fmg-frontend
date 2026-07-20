@@ -1,0 +1,666 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
+import { useAdminCategories } from "@/hooks/admin/useAdminCategories";
+import { useAdminOperators } from "@/hooks/admin/useAdminOperators";
+import {
+  useAdminProducts,
+  useCreateProduct,
+} from "@/hooks/admin/useAdminProducts";
+import { useAdminSuppliers } from "@/hooks/admin/useAdminSuppliers";
+import type { ProductPriceTags } from "@/types/admin/product.types";
+import { AlertTriangle, ArrowLeft, Loader2, Package, Save } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
+
+export function CreateProductForm() {
+  const router = useRouter();
+  const createMutation = useCreateProduct();
+  const { data: operatorsData } = useAdminOperators();
+  const { data: productsData } = useAdminProducts();
+  const { data: suppliersData } = useAdminSuppliers();
+  const { data: categoriesData } = useAdminCategories();
+
+  // Basic product fields
+  const [operatorId, setOperatorId] = useState("");
+  const [productCode, setProductCode] = useState("");
+  const [name, setName] = useState("");
+  const [productType, setProductType] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [denomAmount, setDenomAmount] = useState<number | "">("");
+  const [userPrice, setUserPrice] = useState<number | "">("");
+  const [resellerPrice, setResellerPrice] = useState<number | "">("");
+  const [apiPrice, setApiPrice] = useState<number | "">("");
+  const [bundleBaseProductId, setBundleBaseProductId] = useState("__none");
+  const [bundleRepeatCount, setBundleRepeatCount] = useState<number | "">(2);
+  const [dataMb, setDataMb] = useState<number | undefined>();
+  const [validityDays, setValidityDays] = useState<number | undefined>();
+  const [isActive, setIsActive] = useState(true);
+  const [hasCashback, setHasCashback] = useState(false);
+  const [cashbackPercentage, setCashbackPercentage] = useState("");
+  const [metadata, setMetadata] = useState("");
+
+  // Optional supplier mapping fields
+  const [includeMapping, setIncludeMapping] = useState(false);
+  const [supplierId, setSupplierId] = useState("");
+  const [supplierProductCode, setSupplierProductCode] = useState("");
+  const [supplierPrice, setSupplierPrice] = useState<number | "">("");
+  const [minOrderAmount, setMinOrderAmount] = useState<number | undefined>();
+  const [maxOrderAmount, setMaxOrderAmount] = useState<number | undefined>();
+  const [leadTimeSeconds, setLeadTimeSeconds] = useState<number | undefined>();
+  const [mappingIsActive, setMappingIsActive] = useState(true);
+
+  const operators = operatorsData?.data?.operators || [];
+  const allProducts = productsData?.data?.products || [];
+  const suppliers = suppliersData?.data?.suppliers || [];
+  const categories = categoriesData || [];
+
+  const bundleBaseProducts = useMemo(() => {
+    return allProducts
+      .filter((product) => {
+        const sameOperator = operatorId
+          ? product.operatorId === operatorId
+          : true;
+
+        return sameOperator && product.isActive && !product.bundleBaseProductId;
+      })
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }, [allProducts, operatorId]);
+
+  const duplicateProduct = useMemo(() => {
+    const normalizedCode = productCode.trim().toLowerCase();
+    if (!operatorId || !normalizedCode) {
+      return undefined;
+    }
+
+    return allProducts.find(
+      (product) =>
+        product.operatorId === operatorId &&
+        product.productCode.trim().toLowerCase() === normalizedCode
+    );
+  }, [allProducts, operatorId, productCode]);
+
+  useEffect(() => {
+    if (
+      bundleBaseProductId !== "__none" &&
+      !bundleBaseProducts.some((product) => product.id === bundleBaseProductId)
+    ) {
+      setBundleBaseProductId("__none");
+      setBundleRepeatCount(2);
+    }
+  }, [bundleBaseProductId, bundleBaseProducts]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!operatorId || !productCode || !name || !productType) {
+      return;
+    }
+
+    if (duplicateProduct) {
+      toast.error(
+        "This product code already exists. Open the existing product to edit pricing or supplier mapping."
+      );
+      return;
+    }
+
+    let parsedMetadata: Record<string, unknown> | undefined;
+    if (metadata.trim()) {
+      try {
+        parsedMetadata = JSON.parse(metadata);
+      } catch {
+        // Invalid JSON, ignore metadata
+      }
+    }
+
+    const hasCustomPriceTags =
+      typeof userPrice === "number" ||
+      typeof resellerPrice === "number" ||
+      typeof apiPrice === "number";
+
+    const priceTags: ProductPriceTags | undefined = hasCustomPriceTags
+      ? {
+          ...(typeof userPrice === "number" ? { user: userPrice } : {}),
+          ...(typeof resellerPrice === "number"
+            ? { reseller: resellerPrice }
+            : {}),
+          ...(typeof apiPrice === "number" ? { api: apiPrice } : {}),
+        }
+      : undefined;
+
+    const payload = {
+      operatorId,
+      productCode,
+      name,
+      productType,
+      denomAmount: typeof denomAmount === "number" ? denomAmount : 0,
+      ...(priceTags ? { priceTags } : {}),
+      ...(typeof userPrice === "number" ? { userPrice } : {}),
+      ...(typeof resellerPrice === "number" ? { resellerPrice } : {}),
+      ...(typeof apiPrice === "number" ? { apiPrice } : {}),
+      dataMb,
+      validityDays,
+      isActive,
+      has_cashback: hasCashback,
+      cashback_percentage:
+        hasCashback && cashbackPercentage
+          ? parseFloat(cashbackPercentage)
+          : undefined,
+      ...(bundleBaseProductId !== "__none"
+        ? {
+            bundleBaseProductId,
+            bundleRepeatCount:
+              typeof bundleRepeatCount === "number" ? bundleRepeatCount : 2,
+          }
+        : {}),
+      metadata: parsedMetadata,
+      categoryId: categoryId || undefined,
+      // Include supplier mapping if enabled
+      ...(includeMapping && supplierId
+        ? {
+            supplierId,
+            supplierProductCode,
+            supplierPrice:
+              typeof supplierPrice === "number" ? supplierPrice : undefined,
+            minOrderAmount,
+            maxOrderAmount,
+            leadTimeSeconds,
+            mappingIsActive,
+          }
+        : {}),
+    };
+
+    createMutation.mutate(payload, {
+      onSuccess: () => {
+        router.push("/admin/dashboard/products");
+      },
+    });
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center gap-4">
+        <Button variant="ghost" size="sm" asChild>
+          <Link href="/admin/dashboard/products">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Products
+          </Link>
+        </Button>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Basic Product Info */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Package className="h-5 w-5" />
+              Product Information
+            </CardTitle>
+            <CardDescription>Define the basic product details.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="operator">Operator *</Label>
+                <Select value={operatorId} onValueChange={setOperatorId}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select operator" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {operators.map((op) => (
+                      <SelectItem key={op.id} value={op.id}>
+                        {op.name} ({op.code})
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="productCode">Product Code *</Label>
+                <Input
+                  id="productCode"
+                  value={productCode}
+                  onChange={(e) => setProductCode(e.target.value)}
+                  placeholder="e.g., MTN_1GB_DAILY"
+                  className="font-mono"
+                  required
+                />
+                {duplicateProduct && (
+                  <div className="flex flex-wrap items-center gap-2 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+                    <AlertTriangle className="h-4 w-4 flex-none" />
+                    <span className="min-w-0 flex-1">
+                      Product code already exists for this operator.
+                    </span>
+                    <Button asChild size="sm" variant="outline">
+                      <Link
+                        href={`/admin/dashboard/products/${duplicateProduct.id}`}
+                      >
+                        Open Product
+                      </Link>
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="name">Name *</Label>
+              <Input
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="e.g., MTN 1GB Daily Bundle"
+                required
+              />
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="productType">Product Type *</Label>
+                <Input
+                  id="productType"
+                  value={productType}
+                  onChange={(e) => setProductType(e.target.value)}
+                  placeholder="e.g., data, airtime, bundle"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="category">Category</Label>
+                <Select value={categoryId} onValueChange={setCategoryId}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories.map((cat) => (
+                      <SelectItem key={cat.id} value={cat.id}>
+                        {cat.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="denomAmount">Amount (₦) *</Label>
+                <Input
+                  id="denomAmount"
+                  type="number"
+                  value={denomAmount}
+                  onChange={(e) =>
+                    setDenomAmount(e.target.value ? Number(e.target.value) : "")
+                  }
+                  placeholder="Enter amount"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="space-y-4 rounded-lg border p-4">
+              <div className="space-y-1">
+                <Label className="text-base">Role-Based Prices</Label>
+                <p className="text-muted-foreground text-xs">
+                  Optional. Leave these empty to keep the product amount as the
+                  fallback for all roles.
+                </p>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-3">
+                <div className="space-y-2">
+                  <Label htmlFor="userPrice">User Price (₦)</Label>
+                  <Input
+                    id="userPrice"
+                    type="number"
+                    value={userPrice}
+                    onChange={(e) =>
+                      setUserPrice(e.target.value ? Number(e.target.value) : "")
+                    }
+                    placeholder="Fallback: amount"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="resellerPrice">Reseller Price (₦)</Label>
+                  <Input
+                    id="resellerPrice"
+                    type="number"
+                    value={resellerPrice}
+                    onChange={(e) =>
+                      setResellerPrice(
+                        e.target.value ? Number(e.target.value) : ""
+                      )
+                    }
+                    placeholder="Fallback: user price"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="apiPrice">API Price (₦)</Label>
+                  <Input
+                    id="apiPrice"
+                    type="number"
+                    value={apiPrice}
+                    onChange={(e) =>
+                      setApiPrice(e.target.value ? Number(e.target.value) : "")
+                    }
+                    placeholder="Fallback: reseller price"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-4 rounded-lg border border-dashed p-4">
+              <div className="space-y-1">
+                <Label className="text-base">Bundle Fulfillment</Label>
+                <p className="text-muted-foreground text-xs">
+                  Optional. Select an existing active product to use as the
+                  hidden supplier base for this product. The selected base
+                  product will be purchased repeatedly behind the scenes.
+                </p>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="bundleBaseProductId">Base Product</Label>
+                  <Select
+                    value={bundleBaseProductId}
+                    onValueChange={(value) =>
+                      setBundleBaseProductId(
+                        value === "__none" ? "__none" : value
+                      )
+                    }
+                    disabled={bundleBaseProducts.length === 0}
+                  >
+                    <SelectTrigger>
+                      <SelectValue
+                        placeholder={
+                          bundleBaseProducts.length > 0
+                            ? "No bundle"
+                            : "No eligible base products"
+                        }
+                      />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="__none">No bundle</SelectItem>
+                      {bundleBaseProducts.map((product) => (
+                        <SelectItem key={product.id} value={product.id}>
+                          {product.name} ({product.productCode})
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="bundleRepeatCount">Repeat Count</Label>
+                  <Input
+                    id="bundleRepeatCount"
+                    type="number"
+                    min={2}
+                    step={1}
+                    value={bundleRepeatCount}
+                    onChange={(e) =>
+                      setBundleRepeatCount(
+                        e.target.value ? Number(e.target.value) : ""
+                      )
+                    }
+                    placeholder="2"
+                    disabled={!bundleBaseProductId}
+                  />
+                </div>
+              </div>
+
+              {bundleBaseProductId && (
+                <p className="text-muted-foreground text-xs">
+                  This product will be treated as a wrapper and fulfilled using
+                  the selected base product.
+                </p>
+              )}
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="dataMb">Data (MB)</Label>
+                <Input
+                  id="dataMb"
+                  type="number"
+                  value={dataMb || ""}
+                  onChange={(e) =>
+                    setDataMb(
+                      e.target.value ? Number(e.target.value) : undefined
+                    )
+                  }
+                  placeholder="Optional"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="validityDays">Validity (days)</Label>
+                <Input
+                  id="validityDays"
+                  type="number"
+                  value={validityDays || ""}
+                  onChange={(e) =>
+                    setValidityDays(
+                      e.target.value ? Number(e.target.value) : undefined
+                    )
+                  }
+                  placeholder="Optional"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="metadata">Metadata (JSON)</Label>
+              <Textarea
+                id="metadata"
+                value={metadata}
+                onChange={(e) => setMetadata(e.target.value)}
+                placeholder='{"key": "value"}'
+                className="font-mono text-sm"
+              />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <Label htmlFor="isActive">Product Active</Label>
+              <Switch
+                id="isActive"
+                checked={isActive}
+                onCheckedChange={setIsActive}
+              />
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="flex items-center justify-between rounded-lg border p-3">
+                <div className="space-y-0.5">
+                  <Label className="text-base">Cashback Enabled</Label>
+                  <p className="text-muted-foreground text-xs">
+                    Product gives cashback on purchase
+                  </p>
+                </div>
+                <Switch
+                  checked={hasCashback}
+                  onCheckedChange={setHasCashback}
+                />
+              </div>
+
+              {hasCashback && (
+                <div className="space-y-2">
+                  <Label>Cashback Percentage (%)</Label>
+                  <Input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    max="100"
+                    value={cashbackPercentage}
+                    onChange={(e) => setCashbackPercentage(e.target.value)}
+                    placeholder="e.g. 5.0"
+                    required={hasCashback}
+                  />
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Supplier Mapping (Optional) */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle>Supplier Mapping</CardTitle>
+                <CardDescription>
+                  Optionally link this product to a supplier during creation.
+                </CardDescription>
+              </div>
+              <Switch
+                checked={includeMapping}
+                onCheckedChange={setIncludeMapping}
+              />
+            </div>
+          </CardHeader>
+          {includeMapping && (
+            <CardContent className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label>Supplier</Label>
+                  <Select value={supplierId} onValueChange={setSupplierId}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select supplier" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {suppliers.map((s) => (
+                        <SelectItem key={s.id} value={s.id}>
+                          {s.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Supplier Product Plan ID</Label>
+                  <Input
+                    value={supplierProductCode}
+                    onChange={(e) => setSupplierProductCode(e.target.value)}
+                    placeholder="e.g., 123"
+                    className="font-mono"
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-3">
+                <div className="space-y-2">
+                  <Label>Supplier Price (₦)</Label>
+                  <Input
+                    type="number"
+                    value={supplierPrice}
+                    onChange={(e) =>
+                      setSupplierPrice(
+                        e.target.value ? Number(e.target.value) : ""
+                      )
+                    }
+                    placeholder="Enter price"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Min Order</Label>
+                  <Input
+                    type="number"
+                    value={minOrderAmount || ""}
+                    onChange={(e) =>
+                      setMinOrderAmount(
+                        e.target.value ? Number(e.target.value) : undefined
+                      )
+                    }
+                    placeholder="Optional"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Max Order</Label>
+                  <Input
+                    type="number"
+                    value={maxOrderAmount || ""}
+                    onChange={(e) =>
+                      setMaxOrderAmount(
+                        e.target.value ? Number(e.target.value) : undefined
+                      )
+                    }
+                    placeholder="Optional"
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label>Lead Time (seconds)</Label>
+                  <Input
+                    type="number"
+                    value={leadTimeSeconds || ""}
+                    onChange={(e) =>
+                      setLeadTimeSeconds(
+                        e.target.value ? Number(e.target.value) : undefined
+                      )
+                    }
+                    placeholder="Optional"
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <Label>Mapping Active</Label>
+                  <Switch
+                    checked={mappingIsActive}
+                    onCheckedChange={setMappingIsActive}
+                  />
+                </div>
+              </div>
+            </CardContent>
+          )}
+        </Card>
+
+        {/* Actions */}
+        <div className="flex justify-end gap-4">
+          <Button type="button" variant="outline" asChild>
+            <Link href="/admin/dashboard/products">Cancel</Link>
+          </Button>
+          <Button
+            type="submit"
+            disabled={createMutation.isPending || Boolean(duplicateProduct)}
+          >
+            {createMutation.isPending ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <Save className="mr-2 h-4 w-4" />
+            )}
+            Create Product
+          </Button>
+        </div>
+      </form>
+    </div>
+  );
+}
