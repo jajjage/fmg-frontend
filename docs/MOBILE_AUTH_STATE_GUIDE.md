@@ -19,7 +19,7 @@
 
 ## Overview
 
-The amsy app uses a **dual-layer authentication system**:
+The fmg app uses a **dual-layer authentication system**:
 
 | Layer               | Purpose                            | Storage                 |
 | ------------------- | ---------------------------------- | ----------------------- |
@@ -487,7 +487,7 @@ export function SoftLockScreen() {
 
   const handleBiometricUnlock = async () => {
     const result = await LocalAuthentication.authenticateAsync({
-      promptMessage: "Unlock amsy",
+      promptMessage: "Unlock fmg",
       fallbackLabel: "Use Passcode",
     });
 

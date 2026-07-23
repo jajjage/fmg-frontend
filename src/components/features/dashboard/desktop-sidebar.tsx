@@ -90,12 +90,12 @@ export function DesktopSidebar({ className }: { className?: string }) {
           <div className="relative size-8 overflow-hidden rounded-full">
             <Image
               src="/images/logo.png"
-              alt="Amsy"
+              alt="FMG"
               fill
               className="object-cover"
             />
           </div>
-          <span className="text-xl font-bold">Amsy</span>
+          <span className="text-xl font-bold">FMG</span>
         </div>
 
         <nav className="flex flex-1 flex-col gap-2">

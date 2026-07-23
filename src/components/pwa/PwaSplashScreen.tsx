@@ -144,7 +144,7 @@ export function PwaSplashScreen({ children }: { children: React.ReactNode }) {
           <div style={{ animation: "pulse 2s ease-in-out infinite" }}>
             <Image
               src="/images/logo.png"
-              alt="Amsy"
+              alt="FMG"
               width={100}
               height={100}
               priority

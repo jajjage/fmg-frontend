@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/admin/", "/dashboard/", "/account/", "/_next/"],
       },
     ],
-    sitemap: "https://amsydatasub.com/sitemap.xml",
+    sitemap: "https://fmgdatasub.com/sitemap.xml",
   };
 }

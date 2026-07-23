@@ -52,7 +52,7 @@ export function ReferralLinkSection() {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: "Join Amsy",
+          title: "Join FMG",
           text:
             linkData.sharingMessage ||
             `Use my code ${linkData.referralCode} to join!`,

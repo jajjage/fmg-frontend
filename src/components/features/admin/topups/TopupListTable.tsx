@@ -227,7 +227,7 @@ export function TopupListTable() {
                           </p>
                           {req.user?.phoneNumber && (
                             <a
-                              href={`https://wa.me/${formatForWhatsApp(req.user.phoneNumber)}?text=${encodeURIComponent(`Hello ${req.user.fullName || "there"}, this is AMSY Data Sub admin regarding your recent topup request. `)}`}
+                              href={`https://wa.me/${formatForWhatsApp(req.user.phoneNumber)}?text=${encodeURIComponent(`Hello ${req.user.fullName || "there"}, this is FMG Data Sub admin regarding your recent topup request. `)}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="rounded-full p-1 text-green-600 transition-colors hover:bg-green-50 hover:text-green-700"
@@ -250,7 +250,7 @@ export function TopupListTable() {
                           <Phone className="text-muted-foreground h-3 w-3" />
                           <span className="text-sm">{req.recipientPhone}</span>
                           <a
-                            href={`https://wa.me/${formatForWhatsApp(req.recipientPhone)}?text=${encodeURIComponent("Hello, this is AMSY Data Sub admin regarding a recent topup. ")}`}
+                            href={`https://wa.me/${formatForWhatsApp(req.recipientPhone)}?text=${encodeURIComponent("Hello, this is FMG Data Sub admin regarding a recent topup. ")}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="ml-1 rounded-full p-1 text-green-600 transition-colors hover:bg-green-50 hover:text-green-700"

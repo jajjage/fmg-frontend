@@ -9,7 +9,7 @@ export async function GET() {
         <div
           style={{
             background:
-              "linear-gradient(135deg, #f5fcfe 0%, #d6f3f8 50%, #b8eaf3 100%)",
+              "linear-gradient(135deg, #001F5F 0%, #0FC0AE 50%, #7FD663 100%)",
             width: "1200px",
             height: "630px",
             display: "flex",
@@ -26,25 +26,25 @@ export async function GET() {
             style={{
               width: "200px",
               height: "200px",
-              background: "#25b4d2",
+              background: "#0871AA",
               borderRadius: "20px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              boxShadow: "0 24px 60px rgba(37, 180, 210, 0.28)",
+              boxShadow: "0 24px 60px rgba(8, 113, 170, 0.28)",
             }}
           >
-            {/* A Text Logo */}
+            {/* FMG Text Logo */}
             <div
               style={{
-                fontSize: "80px",
+                fontSize: "70px",
                 fontWeight: "bold",
-                color: "#000000",
-                letterSpacing: "8px",
+                color: "#FFFFFF",
+                letterSpacing: "4px",
                 position: "relative",
               }}
             >
-              A
+              FMG
             </div>
           </div>
 
@@ -53,20 +53,20 @@ export async function GET() {
             style={{
               fontSize: "56px",
               fontWeight: "bold",
-              color: "#000000",
+              color: "#FFFFFF",
               textAlign: "center",
               marginBottom: "10px",
               lineHeight: "1.2",
             }}
           >
-            AMSY
+            FMG
           </div>
 
           {/* Subtitle */}
           <div
             style={{
               fontSize: "38px",
-              color: "rgba(0, 0, 0, 0.76)",
+              color: "rgba(255, 255, 255, 0.9)",
               textAlign: "center",
               fontWeight: "600",
               marginBottom: "20px",
@@ -79,7 +79,7 @@ export async function GET() {
           <div
             style={{
               fontSize: "24px",
-              color: "rgba(0, 0, 0, 0.68)",
+              color: "rgba(255, 255, 255, 0.8)",
               textAlign: "center",
               maxWidth: "900px",
               marginTop: "10px",
@@ -96,7 +96,7 @@ export async function GET() {
               left: "0",
               width: "100%",
               height: "8px",
-              background: "linear-gradient(90deg, #1a8ca5 0%, #25b4d2 100%)",
+              background: "linear-gradient(90deg, #001F5F 0%, #0FC0AE 50%, #7FD663 100%)",
             }}
           />
         </div>

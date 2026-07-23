@@ -406,7 +406,7 @@ async function proceedWithBiometricVerification() {
           JSON.stringify({
             type: "webauthn.get",
             challenge: challenge,
-            origin: "amsy-data.com",
+            origin: "fmg-data.com",
           })
         ),
         authenticatorData: Base64.encode("authenticatorData"),
@@ -927,7 +927,7 @@ async function renderAndShareReceipt(transaction: Transaction) {
 function TransactionReceipt({ transaction }) {
   return (
     <View style={styles.receipt}>
-      <Text style={styles.logo}>amsy Data</Text>
+      <Text style={styles.logo}>fmg Data</Text>
 
       <Divider />
 

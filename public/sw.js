@@ -1,4 +1,4 @@
-const CACHE_NAME = "amsy-cache-v1";
+const CACHE_NAME = "fmg-cache-v1";
 
 // Pages and assets to pre-cache for instant PWA startup
 const PRECACHE_URLS = [
@@ -6,8 +6,8 @@ const PRECACHE_URLS = [
   "/dashboard",
   "/login",
   "/manifest.json",
-  "/images/pwa-192.png",
-  "/images/pwa-512.png",
+  "/images/logo-192.png",
+  "/images/logo-512.png",
 ];
 
 // Minimal service worker to satisfy installability checks and provide basic offline support
@@ -138,7 +138,7 @@ self.addEventListener("push", (event) => {
 
     const notificationOptions = {
       body: notificationBody,
-      icon: payload.notification?.image || "/images/pwa-192.png",
+      icon: payload.notification?.image || "/images/logo-192.png",
       badge: "/res/drawable-xxxhdpi/ic_notification.png",
       tag: notificationId || "notification",
       requireInteraction: false,

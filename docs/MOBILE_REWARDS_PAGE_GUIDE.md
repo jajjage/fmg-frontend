@@ -191,7 +191,7 @@ Static promotional cards (currently hardcoded).
 
   {/* Ad Card 2 */}
   <View style={styles.adCard}>
-    <LinearGradient colors={["#3B82F6", "#06B6D4"]} style={styles.adHeader}>
+    <LinearGradient colors={["#3B82F6", "#054B93"]} style={styles.adHeader}>
       <Text style={styles.adTitle}>Double Cashback Day</Text>
       <Text style={styles.adSubtitle}>Earn double cashback on airtime</Text>
     </LinearGradient>
@@ -408,7 +408,7 @@ export function RewardsScreen() {
       {/* Ad Card 2 */}
       <View style={styles.adCard}>
         <LinearGradient
-          colors={["#3B82F6", "#06B6D4"]}
+          colors={["#3B82F6", "#054B93"]}
           style={styles.adGradient}
         >
           <Text style={styles.adTitle}>Double Cashback Day</Text>

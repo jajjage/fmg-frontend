@@ -36,13 +36,13 @@ export function Header() {
           <Link href="/" className="flex items-center space-x-2">
             <Image
               src="/images/logo.png"
-              alt="Amsy"
+              alt="FMG"
               width={40}
               height={40}
               className="h-8 w-8"
             />
             <span className="hidden text-base font-bold sm:block sm:text-lg">
-              Amsy Data Sub
+              FMG Data Sub
             </span>
           </Link>
         </div>
@@ -101,7 +101,7 @@ export function Header() {
                   >
                     <Image
                       src="/images/logo.png"
-                      alt="Amsy"
+                      alt="FMG"
                       width={32}
                       height={32}
                     />

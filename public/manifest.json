@@ -1,6 +1,6 @@
 {
-  "name": "Amsy Data",
-  "short_name": "Amsy Data",
+  "name": "FMG Data",
+  "short_name": "FMG Data",
   "id": "/",
   "description": "Fast, reliable data, airtime, and bill payments.",
   "start_url": "/?source=pwa",

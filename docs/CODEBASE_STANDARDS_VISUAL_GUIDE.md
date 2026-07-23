@@ -194,7 +194,7 @@
 ## Folder Structure Hierarchy
 
 ```
-amsy-data-frontend/
+fmg-data-frontend/
 │
 ├── 📁 docs/
 │   ├── CODEBASE_STANDARDS.md              ← Master blueprint

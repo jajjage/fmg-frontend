@@ -181,7 +181,7 @@ export default function AdminDashboardLayout({
         <SidebarHeader className="border-b">
           <div className="flex items-center gap-2 px-2 py-2">
             <ShieldCheckIcon className="text-primary h-6 w-6" />
-            <span className="font-semibold">Amsy Admin</span>
+            <span className="font-semibold">FMG Admin</span>
           </div>
         </SidebarHeader>
 

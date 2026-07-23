@@ -13,8 +13,8 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Contact Us | Amsy",
-  description: "Get in touch with Amsy for support, inquiries, and assistance.",
+  title: "Contact Us | FMG",
+  description: "Get in touch with FMG for support, inquiries, and assistance.",
 };
 
 export default function ContactPage() {
@@ -30,9 +30,9 @@ export default function ContactPage() {
     {
       icon: Mail,
       title: "Email Support",
-      description: "support@amsydatasub.com",
+      description: "support@fmgdatasub.com",
       action: "Send Email",
-      href: "mailto:support@amsydatasub.com",
+      href: "mailto:support@fmgdatasub.com",
       color: "bg-blue-100 text-blue-600",
     },
     {

@@ -31,9 +31,9 @@ export default function HelpSupportPage() {
     {
       icon: Mail,
       title: "Email Support",
-      description: "support@amsydatasub.com",
+      description: "support@fmgdatasub.com",
       action: "Send Email",
-      href: "mailto:support@amsydatasub.com",
+      href: "mailto:support@fmgdatasub.com",
     },
     {
       icon: Phone,

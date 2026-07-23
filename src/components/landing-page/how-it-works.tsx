@@ -34,7 +34,7 @@ export function HowItWorks() {
           <CardContent>
             <CardTitle>Fund Your Wallet</CardTitle>
             <CardDescription className="mt-2">
-              Easily add money to your secure Amsy wallet via bank transfer or
+              Easily add money to your secure FMG wallet via bank transfer or
               card.
             </CardDescription>
           </CardContent>

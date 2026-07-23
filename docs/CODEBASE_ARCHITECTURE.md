@@ -1,8 +1,8 @@
-# amsy Data Frontend - Codebase Architecture Guide
+# fmg Data Frontend - Codebase Architecture Guide
 
 ## Overview
 
-This document explains the complete architecture of the amsy Data Frontend, focusing on the authentication flow, API client, React Query integration, and notification service.
+This document explains the complete architecture of the fmg Data Frontend, focusing on the authentication flow, API client, React Query integration, and notification service.
 
 ---
 

@@ -13,7 +13,7 @@ interface WhatsAppWidgetProps {
 
 export function WhatsAppWidget({
   phoneNumber = "2348143641053",
-  message = "Hello! I need help with Amsy.",
+  message = "Hello! I need help with FMG.",
   className,
 }: WhatsAppWidgetProps) {
   const pathname = usePathname();

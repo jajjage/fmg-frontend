@@ -39,9 +39,9 @@ const createWrapper = () => {
 
 describe("ReferralLinkSection", () => {
   const mockLinkData = {
-    referralLink: "https://amsy.data/register?ref=USER123",
+    referralLink: "https://fmg.data/register?ref=USER123",
     referralCode: "USER123",
-    sharingMessage: "Join me on amsy Data!",
+    sharingMessage: "Join me on fmg Data!",
     qrCodeUrl: "https://example.com/qr.png",
   };
 

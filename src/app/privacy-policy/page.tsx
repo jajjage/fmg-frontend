@@ -1,6 +1,6 @@
 export const metadata = {
-  title: "Privacy Policy - Amsy",
-  description: "Privacy Policy for the Amsy application",
+  title: "Privacy Policy - FMG",
+  description: "Privacy Policy for the FMG application",
 };
 
 export default function PrivacyPolicyPage() {
@@ -17,7 +17,7 @@ export default function PrivacyPolicyPage() {
 
           <div className="prose prose-blue max-w-none space-y-6 text-gray-700">
             <p>
-              This Privacy Policy describes how Amsy (&quot;we,&quot;
+              This Privacy Policy describes how FMG (&quot;we,&quot;
               &quot;us,&quot; or &quot;our&quot;) collects, uses, and discloses
               your information when you use our mobile application (the
               &quot;App&quot;).
@@ -185,19 +185,19 @@ export default function PrivacyPolicyPage() {
                 <li>
                   <strong>Email:</strong>{" "}
                   <a
-                    href="mailto:support@amsydatasub.com"
+                    href="mailto:support@fmgdatasub.com"
                     className="text-blue-600 hover:underline"
                   >
-                    support@amsydatasub.com
+                    support@fmgdatasub.com
                   </a>
                 </li>
                 <li>
                   <strong>Website:</strong>{" "}
                   <a
-                    href="https://amsydatasub.com"
+                    href="https://fmgdatasub.com"
                     className="text-blue-600 hover:underline"
                   >
-                    https://amsydatasub.com
+                    https://fmgdatasub.com
                   </a>
                 </li>
               </ul>

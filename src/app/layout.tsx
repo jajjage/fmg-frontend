@@ -15,11 +15,11 @@ import "../styles/globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Amsy - Premium Data & Airtime Services",
-    template: "%s | Amsy",
+    default: "FMG - Premium Data & Airtime Services",
+    template: "%s | FMG",
   },
   description:
-    "Buy cheap data bundles, airtime, and pay bills instantly with Amsy. Premium data and airtime services with instant delivery and best prices.",
+    "Buy cheap data bundles, airtime, and pay bills instantly with FMG. Premium data and airtime services with instant delivery and best prices.",
   keywords: [
     "cheap data",
     "buy airtime",
@@ -31,21 +31,21 @@ export const metadata: Metadata = {
     "cheap airtime nigeria",
     "data reseller",
     "bill payment",
-    "amsy",
+    "fmg",
   ],
-  authors: [{ name: "Amsy" }],
-  creator: "Amsy",
-  publisher: "Amsy",
-  metadataBase: new URL("https://amsydatasub.com"),
+  authors: [{ name: "FMG" }],
+  creator: "FMG",
+  publisher: "FMG",
+  metadataBase: new URL("https://fmgdatasub.com"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
     type: "website",
     locale: "en_NG",
-    url: "https://amsydatasub.com",
-    siteName: "Amsy",
-    title: "Amsy - Premium Data & Airtime Services",
+    url: "https://fmgdatasub.com",
+    siteName: "FMG",
+    title: "FMG - Premium Data & Airtime Services",
     description:
       "Buy cheap data bundles, airtime, and pay bills instantly. Premium data and airtime services.",
     images: [
@@ -53,13 +53,13 @@ export const metadata: Metadata = {
         url: "/api/og",
         width: 1200,
         height: 630,
-        alt: "Amsy - Premium Data & Airtime Services",
+        alt: "FMG - Premium Data & Airtime Services",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Amsy - Premium Data & Airtime Services",
+    title: "FMG - Premium Data & Airtime Services",
     description: "Buy cheap data bundles, airtime, and pay bills instantly.",
     images: ["/api/og"],
   },
@@ -78,15 +78,15 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Amsy",
+    title: "FMG",
   },
   formatDetection: {
     telephone: false,
   },
   icons: {
     icon: [
-      { url: "/images/pwa-192.png", sizes: "192x192", type: "image/png" },
-      { url: "/images/pwa-512.png", sizes: "512x512", type: "image/png" },
+      { url: "/images/logo-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/images/logo-512.png", sizes: "512x512", type: "image/png" },
     ],
     apple: [{ url: "/images/apple-touch-icon.png", sizes: "180x180" }],
   },
@@ -94,7 +94,7 @@ export const metadata: Metadata = {
     "mobile-web-app-capable": "yes",
     "apple-mobile-web-app-capable": "yes",
     "apple-mobile-web-app-status-bar-style": "default",
-    "apple-mobile-web-app-title": "Amsy",
+    "apple-mobile-web-app-title": "FMG",
     "theme-color": "#25b4d2",
   },
 };
@@ -125,7 +125,7 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Amsy" />
+        <meta name="apple-mobile-web-app-title" content="FMG" />
       </head>
       <body className="antialiased">
         <ThemeProvider

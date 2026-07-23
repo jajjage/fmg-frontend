@@ -21,7 +21,7 @@ describe("useSyncFcmOnMount - App Open Scenario", () => {
     isVerified: true,
     twoFactorEnabled: false,
     accountNumber: "ACC123",
-    providerName: "amsy",
+    providerName: "fmg",
     balance: "1000",
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),

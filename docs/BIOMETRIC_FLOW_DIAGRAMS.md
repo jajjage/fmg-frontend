@@ -4,7 +4,7 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                     amsy DATA APP                              │
+│                     fmg DATA APP                              │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
 │  ┌───────────────────────────────────────────────────────────┐  │
@@ -94,7 +94,7 @@ User Initiates Purchase (Buy Airtime)
     ↓
 Response: {
   challenge: "base64_challenge_xyz",
-  rpId: "amsy-data.com",
+  rpId: "fmg-data.com",
   allowCredentials: [...],
   userVerification: "preferred"
 }
@@ -421,7 +421,7 @@ For Transaction Biometric:
 ```json
 {
   "challenge": "dG9udHlscWJkdGRkZHliaWdidWhyYnl0YXJidXJ0",
-  "rpId": "amsy-data.com",
+  "rpId": "fmg-data.com",
   "allowCredentials": [
     {
       "id": "Ym9iYmJib2JiYm9iYg==",

@@ -548,7 +548,7 @@ export const ExportReceipt = React.forwardRef<
             fontWeight: "500",
           }}
         >
-          amsydatasub.com
+          fmgdatasub.com
         </p>
       </div>
     </div>

@@ -23,7 +23,7 @@ export function Footer() {
       <div className="container mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-8 md:grid-cols-4">
           <div className="md:col-span-1">
-            <h3 className="text-lg font-bold">Amsy</h3>
+            <h3 className="text-lg font-bold">FMG</h3>
             <p className="mt-2 text-sm leading-relaxed">
               Your one-stop shop for data, airtime, and bill payments in
               Nigeria.
@@ -81,7 +81,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t pt-8 text-center text-sm">
-          <p>© {year} Amsy. All Rights Reserved.</p>
+          <p>© {year} FMG. All Rights Reserved.</p>
         </div>
       </div>
     </footer>

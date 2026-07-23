@@ -54,7 +54,7 @@ jobs:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
     needs: test
-    environment: amsy  # Use amsy environment variables
+    environment: fmg  # Use fmg environment variables
 
     permissions:
       contents: read
