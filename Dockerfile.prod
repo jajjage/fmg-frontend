@@ -92,11 +92,11 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 USER nextjs
 
 # Expose port
-EXPOSE 3007
+EXPOSE 3008
 
 # Set hostname
 ENV HOSTNAME="0.0.0.0"
-ENV PORT=3007
+ENV PORT=3008
 
 # Start the application
 CMD ["node", "server.js"]
