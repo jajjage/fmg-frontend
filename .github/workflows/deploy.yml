@@ -88,7 +88,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ secrets.DOCKERHUB_USERNAME }}/amsy-frontend
+          images: ${{ env.REGISTRY }}/${{ secrets.DOCKERHUB_USERNAME }}/fmg-frontend
           tags: |
             type=sha,prefix=
             type=raw,value=latest,enable={{is_default_branch}}
