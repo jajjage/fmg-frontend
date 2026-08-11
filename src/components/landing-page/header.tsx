@@ -23,15 +23,15 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
-    { href: "#services", label: "Services" },
-    { href: "#pricing", label: "Pricing" },
-    { href: "#about", label: "About Us" },
-    { href: "#faq", label: "FAQs" },
+    { href: "/#services", label: "Services" },
+    { href: "/#pricing", label: "Pricing" },
+    { href: "/about", label: "About Us" },
+    { href: "/#faq", label: "FAQs" },
   ];
 
   return (
-    <header className="bg-background/95 supports-backdrop-filter:bg-background/60 sticky top-0 z-40 w-full border-b backdrop-blur">
-      <div className="flex h-16 items-center justify-between px-2 md:px-3 lg:px-4">
+    <header className="bg-background/95 supports-backdrop-filter:bg-background/60 sticky top-0 z-40 w-full border-b border-border backdrop-blur">
+      <div className="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="flex shrink-0 items-center">
           <Link href="/" className="flex items-center space-x-2">
             <Image
@@ -41,7 +41,7 @@ export function Header() {
               height={40}
               className="h-8 w-8"
             />
-            <span className="hidden text-base font-bold sm:block sm:text-lg">
+            <span className="hidden text-base font-bold sm:block sm:text-lg text-foreground">
               FMG Data Sub
             </span>
           </Link>
@@ -67,12 +67,12 @@ export function Header() {
         </div>
 
         <div className="hidden shrink-0 items-center space-x-2 md:flex">
-          <Button variant="ghost" asChild>
+          <Button variant="ghost" asChild className="transition-all duration-150 active:scale-[0.97]">
             <Link href="/login" className="cursor-pointer">
               Login
             </Link>
           </Button>
-          <Button asChild>
+          <Button asChild className="transition-all duration-150 active:scale-[0.97] font-bold">
             <Link href="/register" className="cursor-pointer">
               Create Account
             </Link>
@@ -96,7 +96,7 @@ export function Header() {
                 <SheetTitle>
                   <Link
                     href="/"
-                    className="text-lg font-bold"
+                    className="flex items-center space-x-2 text-lg font-bold"
                     onClick={() => setIsOpen(false)}
                   >
                     <Image
@@ -105,25 +105,26 @@ export function Header() {
                       width={32}
                       height={32}
                     />
+                    <span>FMG Data Sub</span>
                   </Link>
                 </SheetTitle>
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="hover:text-primary py-2 text-base transition-colors"
+                    className="hover:text-primary text-foreground py-2 text-base transition-colors font-medium"
                     onClick={() => setIsOpen(false)}
                   >
                     {link.label}
                   </Link>
                 ))}
-                <div className="flex flex-col space-y-3 border-t pt-6">
+                <div className="flex flex-col space-y-3 border-t border-border pt-6">
                   <Button variant="ghost" className="w-full" asChild>
                     <Link href="/login" onClick={() => setIsOpen(false)}>
                       Login
                     </Link>
                   </Button>
-                  <Button className="w-full" asChild>
+                  <Button className="w-full font-bold" asChild>
                     <Link href="/register" onClick={() => setIsOpen(false)}>
                       Create Account
                     </Link>
