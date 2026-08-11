@@ -136,6 +136,9 @@ describe("RegisterForm Component", () => {
       await user.type(passwordInput, "ValidPass123!");
       await user.type(confirmInput, "ValidPass123!");
 
+      const termsCheckbox = screen.getByRole("checkbox");
+      await user.click(termsCheckbox);
+
       const submitButton = screen.getByRole("button", {
         name: /Create an account/i,
       });
