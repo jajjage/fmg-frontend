@@ -22,7 +22,7 @@ const pricingData: Record<
   mtn: {
     name: "MTN",
     subtitle: "Fast & Reliable",
-    color: "bg-yellow-500/10 text-yellow-700 border-yellow-200 dark:bg-yellow-950/30 dark:text-yellow-400 dark:border-yellow-800",
+    color: "bg-yellow-500/10 text-yellow-700 border-yellow-200 dark:bg-yellow-950/40 dark:text-yellow-400 dark:border-yellow-800/60",
     plans: [
       { plan: "500MB", price: "₦350", validity: "1 Week", category: "weekly" },
       { plan: "1GB", price: "₦400", validity: "1 Week", category: "weekly" },
@@ -49,7 +49,7 @@ const pricingData: Record<
   airtel: {
     name: "AIRTEL",
     subtitle: "Premium Quality",
-    color: "bg-red-500/10 text-red-700 border-red-200 dark:bg-red-950/30 dark:text-red-400 dark:border-red-800",
+    color: "bg-red-500/10 text-red-700 border-red-200 dark:bg-red-950/40 dark:text-red-400 dark:border-red-800/60",
     plans: [
       { plan: "150MB", price: "₦70", validity: "1 Day", category: "daily" },
       { plan: "300MB", price: "₦110", validity: "2 Days", category: "daily" },
@@ -69,7 +69,7 @@ const pricingData: Record<
   glo: {
     name: "GLO",
     subtitle: "Smooth Connection",
-    color: "bg-green-500/10 text-green-700 border-green-200 dark:bg-green-950/30 dark:text-green-400 dark:border-green-800",
+    color: "bg-green-500/10 text-green-700 border-green-200 dark:bg-green-950/40 dark:text-green-400 dark:border-green-800/60",
     plans: [
       { plan: "500MB", price: "₦220", validity: "1 Month", category: "monthly" },
       { plan: "1GB", price: "₦430", validity: "1 Month", category: "monthly", popular: true },
@@ -82,7 +82,7 @@ const pricingData: Record<
   etisalat: {
     name: "9MOBILE",
     subtitle: "Always Connected",
-    color: "bg-emerald-500/10 text-emerald-700 border-emerald-200 dark:bg-emerald-950/30 dark:text-emerald-400 dark:border-emerald-800",
+    color: "bg-emerald-500/10 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-800/60",
     plans: [
       { plan: "1GB", price: "₦1,000", validity: "1 Month", category: "monthly", popular: true },
       { plan: "2.5GB", price: "₦1,500", validity: "1 Month", category: "monthly" },
@@ -103,13 +103,13 @@ export function Pricing() {
       : currentNetworkData.plans.filter((p) => p.category === filter);
 
   return (
-    <section id="pricing" className="py-16 md:py-24">
+    <section id="pricing" className="py-16 md:py-24 border-t border-border">
       <div className="text-center max-w-3xl mx-auto px-4 mb-10">
-        <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-semibold text-primary mb-4">
-          <Sparkles className="size-3.5" />
+        <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary mb-4">
+          <Sparkles className="size-3.5 fill-primary" />
           <span>Cheapest Rates in Nigeria</span>
         </div>
-        <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl md:text-5xl">
+        <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl">
           Transparent Data Pricing
         </h2>
         <p className="mt-3 text-muted-foreground text-base sm:text-lg">
@@ -119,11 +119,11 @@ export function Pricing() {
 
       {/* SINGLE MASTER PRICING CARD */}
       <div className="max-w-4xl mx-auto px-4">
-        <Card className="overflow-hidden border-gray-200 shadow-lg transition-all duration-200 hover:shadow-xl bg-white">
+        <Card className="overflow-hidden border-border bg-card text-card-foreground shadow-lg transition-all duration-200 hover:shadow-xl">
           {/* Card Top / Network Selection Header */}
-          <CardHeader className="bg-gray-50/80 p-4 sm:p-6 border-b border-gray-100">
+          <CardHeader className="bg-muted/50 p-4 sm:p-6 border-b border-border">
             <Tabs defaultValue="mtn" onValueChange={setActiveNetwork} className="w-full">
-              <TabsList className="grid grid-cols-4 w-full h-12 bg-gray-200/70 p-1 rounded-xl">
+              <TabsList className="grid grid-cols-4 w-full h-12 bg-muted p-1 rounded-xl">
                 {Object.entries(pricingData).map(([key, data]) => (
                   <TabsTrigger
                     key={key}
@@ -151,7 +151,7 @@ export function Pricing() {
               </div>
 
               {/* Filter Pills */}
-              <div className="flex items-center gap-1.5 bg-white p-1 rounded-lg border text-xs font-medium shadow-xs">
+              <div className="flex items-center gap-1.5 bg-background p-1 rounded-lg border border-border text-xs font-medium shadow-xs">
                 {(["all", "monthly", "weekly", "daily"] as const).map((cat) => (
                   <button
                     key={cat}
@@ -178,7 +178,7 @@ export function Pricing() {
                   className={`relative flex flex-col justify-between p-3.5 rounded-xl border transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${
                     item.popular
                       ? "border-primary/40 bg-primary/5 dark:bg-primary/10"
-                      : "border-gray-200 bg-white hover:border-gray-300"
+                      : "border-border bg-card hover:border-primary/40"
                   }`}
                 >
                   {item.popular && (
@@ -191,12 +191,12 @@ export function Pricing() {
                     <span className="text-xs text-muted-foreground font-medium uppercase tracking-wider">
                       {item.validity}
                     </span>
-                    <h3 className="text-lg font-bold text-gray-900 mt-0.5">
+                    <h3 className="text-lg font-bold text-foreground mt-0.5">
                       {item.plan}
                     </h3>
                   </div>
 
-                  <div className="mt-3 pt-2 border-t border-gray-100 flex items-center justify-between">
+                  <div className="mt-3 pt-2 border-t border-border flex items-center justify-between">
                     <span className="text-base font-extrabold text-primary">
                       {item.price}
                     </span>
@@ -214,10 +214,10 @@ export function Pricing() {
             </div>
 
             {/* Bottom Footer Section of Master Card */}
-            <div className="mt-8 pt-6 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4 bg-gray-50/60 -mx-4 -mb-4 sm:-mx-6 sm:-mb-6 p-4 sm:p-6">
+            <div className="mt-8 pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 bg-muted/30 -mx-4 -mb-4 sm:-mx-6 sm:-mb-6 p-4 sm:p-6">
               <div className="flex items-center gap-4 text-xs text-muted-foreground">
                 <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="size-4 text-green-600 shrink-0" />
+                  <CheckCircle2 className="size-4 text-green-600 dark:text-green-400 shrink-0" />
                   <span>Instant Wallet Processing</span>
                 </div>
                 <div className="flex items-center gap-1.5">

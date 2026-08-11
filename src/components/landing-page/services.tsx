@@ -42,9 +42,9 @@ const services = [
 
 export function Services() {
   return (
-    <section id="services" className="py-16 md:py-24 border-b border-gray-100">
+    <section id="services" className="py-16 md:py-24 border-b border-border">
       <div className="text-center max-w-2xl mx-auto px-4">
-        <h2 className="text-3xl font-bold tracking-tight text-gray-900 md:text-4xl">
+        <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
           All Essential Services in One Place
         </h2>
         <p className="text-muted-foreground mt-3 text-base sm:text-lg">
@@ -54,25 +54,25 @@ export function Services() {
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 max-w-7xl mx-auto px-4">
         {services.map((service) => (
           <Link href={service.href} key={service.title} className="group block">
-            <Card className="h-full border-gray-200 bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-lg active:scale-[0.98]">
+            <Card className="h-full border-border bg-card text-card-foreground transition-all duration-200 hover:-translate-y-1 hover:shadow-lg active:scale-[0.98]">
               <CardHeader className="pt-6 pb-2">
                 <div className="flex items-center justify-between">
                   <div className="bg-primary/10 rounded-2xl p-3.5 group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-200">
                     {service.icon}
                   </div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground bg-gray-100 px-2.5 py-1 rounded-full">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground bg-muted border border-border px-2.5 py-1 rounded-full">
                     {service.badge}
                   </span>
                 </div>
               </CardHeader>
               <CardContent className="pt-3">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg font-bold group-hover:text-primary transition-colors">
+                  <CardTitle className="text-lg font-bold text-foreground group-hover:text-primary transition-colors">
                     {service.title}
                   </CardTitle>
                   <ArrowUpRight className="size-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity -translate-x-1 group-hover:translate-x-0" />
                 </div>
-                <CardDescription className="mt-2 text-sm leading-relaxed text-gray-600">
+                <CardDescription className="mt-2 text-sm leading-relaxed text-muted-foreground">
                   {service.description}
                 </CardDescription>
               </CardContent>
