@@ -427,6 +427,12 @@ export function RegisterForm() {
               >
                 {showConfirmPassword ? <EyeOff /> : <Eye />}
               </Button>
+            </div>
+            {errors.confirmPassword && (
+              <p className="text-sm text-red-500">
+                {errors.confirmPassword.message}
+              </p>
+            )}
           </div>
           <div className="flex items-start space-x-2 pt-1">
             <Controller
