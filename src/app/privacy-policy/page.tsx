@@ -1,6 +1,9 @@
-export const metadata = {
-  title: "Privacy Policy - FMG",
-  description: "Privacy Policy for the FMG application",
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy - FMG Data Sub",
+  description:
+    "Privacy Policy and data protection guidelines for FMG Data Sub application and services.",
 };
 
 export default function PrivacyPolicyPage() {
@@ -11,194 +14,277 @@ export default function PrivacyPolicyPage() {
           <h1 className="mb-2 text-3xl font-bold text-gray-900">
             Privacy Policy
           </h1>
-          <p className="mb-8 text-sm text-gray-500">
-            Last updated: January 27, 2026
+          <p className="mb-8 text-sm font-semibold text-gray-500 uppercase tracking-wide">
+            FMG DATA SUB - PRIVACY POLICY
           </p>
 
           <div className="prose prose-blue max-w-none space-y-6 text-gray-700">
-            <p>
-              This Privacy Policy describes how FMG (&quot;we,&quot;
-              &quot;us,&quot; or &quot;our&quot;) collects, uses, and discloses
-              your information when you use our mobile application (the
-              &quot;App&quot;).
-            </p>
-
+            {/* SECTION 1 */}
             <section>
               <h2 className="mb-3 text-xl font-semibold text-gray-900">
-                1. Information We Collect
-              </h2>
-
-              <h3 className="mt-4 mb-2 text-lg font-medium text-gray-900">
-                1.1 Information You Provide
-              </h3>
-              <p>We collect information you provide directly to us, such as:</p>
-              <ul className="list-disc space-y-1 pl-5">
-                <li>
-                  <strong>Account Information:</strong> Name, email address,
-                  phone number, and password when you register.
-                </li>
-                <li>
-                  <strong>Transaction Data:</strong> Details about payments,
-                  airtime/data purchases, and bill payments.
-                </li>
-                <li>
-                  <strong>Verification Data:</strong> BVN (Bank Verification
-                  Number) or NIN (National Identity Number) for regulatory
-                  compliance (KYC).
-                </li>
-              </ul>
-
-              <h3 className="mt-4 mb-2 text-lg font-medium text-gray-900">
-                1.2 Information We Collect Automatically
-              </h3>
-              <ul className="list-disc space-y-1 pl-5">
-                <li>
-                  <strong>Device Information:</strong> Device model, operating
-                  system, and unique device identifiers (for security and device
-                  management).
-                </li>
-                <li>
-                  <strong>Log Data:</strong> Information about how you use the
-                  App, including access times and feature usage.
-                </li>
-              </ul>
-
-              <h3 className="mt-4 mb-2 text-lg font-medium text-gray-900">
-                1.3 Permissions
-              </h3>
-              <p>
-                We request certain permissions to provide core functionality:
-              </p>
-              <ul className="list-disc space-y-1 pl-5">
-                <li>
-                  <strong>Camera:</strong> Required to scan QR codes for
-                  payments or capture documents for verification.
-                </li>
-                <li>
-                  <strong>Notifications:</strong> To send you alerts about
-                  transaction status, security updates, and promotions.
-                </li>
-                <li>
-                  <strong>Biometric Hardware:</strong> To enable secure login
-                  and transaction authorization using Face ID or Fingerprint.
-                </li>
-              </ul>
-              <p className="mt-2 text-sm italic">
-                Note: We do <strong>not</strong> access your contacts.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="mb-3 text-xl font-semibold text-gray-900">
-                2. How We Use Your Information
-              </h2>
-              <p>We use your information to:</p>
-              <ul className="list-disc space-y-1 pl-5">
-                <li>Provide, maintain, and improve the App.</li>
-                <li>Process transactions and send related notifications.</li>
-                <li>Verify your identity and prevent fraud.</li>
-                <li>Comply with legal and regulatory obligations.</li>
-                <li>Provide customer support.</li>
-              </ul>
-            </section>
-
-            <section>
-              <h2 className="mb-3 text-xl font-semibold text-gray-900">
-                3. Sharing Your Information
+                1. OVERVIEW &amp; DATA CONTROLLER
               </h2>
               <p>
-                We do not sell your personal information. We may share your
-                information with:
+                This Privacy Policy explains how <strong>FMG Data Sub</strong>{" "}
+                (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;) collects,
+                uses, stores, shares, and protects your information across our
+                website, mobile application, APIs, and associated services.
               </p>
-              <ul className="list-disc space-y-1 pl-5">
-                <li>
-                  <strong>Service Providers:</strong> Third-party vendors who
-                  help us process payments, host data, or send notifications.
-                </li>
-                <li>
-                  <strong>Legal Requirements:</strong> If required by law,
-                  regulation, or legal process.
-                </li>
-              </ul>
-            </section>
-
-            <section>
-              <h2 className="mb-3 text-xl font-semibold text-gray-900">
-                4. Data Security
-              </h2>
-              <p>
-                We implement appropriate technical and organizational measures
-                to protect your personal data against unauthorized access,
-                alteration, disclosure, or destruction. Sensitive data like
-                passwords and PINs are encrypted.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="mb-3 text-xl font-semibold text-gray-900">
-                5. Your Rights
-              </h2>
-              <p>
-                Depending on your location, you may have rights regarding your
-                personal data, including:
-              </p>
-              <ul className="list-disc space-y-1 pl-5">
-                <li>Accessing your data.</li>
-                <li>Correcting inaccurate data.</li>
-                <li>Deleting your account and data.</li>
-              </ul>
               <p className="mt-2">
-                To exercise these rights, please contact our support team.
+                FMG Data Sub is the Data Controller responsible for your
+                personal information in line with the{" "}
+                <strong>Nigeria Data Protection Act 2023 (NDPA)</strong>.
+              </p>
+              <p className="mt-2">
+                By using our services, you consent to the collection and
+                processing of your data as described in this policy.
               </p>
             </section>
 
+            {/* SECTION 2 */}
             <section>
               <h2 className="mb-3 text-xl font-semibold text-gray-900">
-                6. Children&apos;s Privacy
+                2. INFORMATION WE COLLECT
               </h2>
-              <p>
-                Our App is not intended for individuals under the age of 18. We
-                do not knowingly collect personal information from children.
+              <p className="mb-3">
+                We collect information you provide and data we receive
+                automatically:
               </p>
+
+              <div className="space-y-4">
+                <div>
+                  <h3 className="font-semibold text-gray-900">
+                    1. Personal Data You Provide
+                  </h3>
+                  <ul className="mt-1 list-disc space-y-1 pl-5">
+                    <li>
+                      <strong>Registration Details:</strong> Full name, email
+                      address, phone number, password
+                    </li>
+                    <li>
+                      <strong>Transaction Details:</strong> Bank account
+                      details, payment card info, wallet transactions
+                    </li>
+                    <li>
+                      <strong>Verification Data:</strong> NIN, BVN, or
+                      Government ID when required for KYC
+                    </li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-gray-900">
+                    2. Technical &amp; Usage Data
+                  </h3>
+                  <ul className="mt-1 list-disc space-y-1 pl-5">
+                    <li>
+                      <strong>Device Information:</strong> IP address, device
+                      ID, browser type, operating system
+                    </li>
+                    <li>
+                      <strong>Usage Data:</strong> Pages visited, services used,
+                      transaction logs
+                    </li>
+                    <li>
+                      <strong>Location Data:</strong> Used for fraud prevention
+                      and service delivery
+                    </li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-gray-900">
+                    3. Third-Party Data
+                  </h3>
+                  <p className="mt-1">
+                    We may receive verification data from financial
+                    institutions, NIN database, and network providers to confirm
+                    your identity.
+                  </p>
+                </div>
+              </div>
             </section>
 
+            {/* SECTION 3 */}
             <section>
               <h2 className="mb-3 text-xl font-semibold text-gray-900">
-                7. Changes to This Policy
+                3. HOW WE USE YOUR DATA
               </h2>
-              <p>
-                We may update this Privacy Policy from time to time. We will
-                notify you of any changes by posting the new Privacy Policy on
-                this page and updating the &quot;Last updated&quot; date.
+              <p className="mb-3">We process your data to:</p>
+              <ol className="list-decimal space-y-2 pl-5">
+                <li>
+                  Provide and deliver services: data, airtime, bill payments,
+                  and networking
+                </li>
+                <li>Verify your identity and secure your account</li>
+                <li>Process transactions and send receipts/notifications</li>
+                <li>
+                  Prevent, detect, and investigate fraud and illegal activity
+                </li>
+                <li>
+                  Comply with legal obligations to CBN, NCC, and other
+                  regulators
+                </li>
+                <li>
+                  Improve our platform, customer support, and user experience
+                </li>
+                <li>
+                  Send service updates. With your consent, we may send
+                  promotional messages
+                </li>
+              </ol>
+            </section>
+
+            {/* SECTION 4 */}
+            <section>
+              <h2 className="mb-3 text-xl font-semibold text-gray-900">
+                4. HOW WE SHARE YOUR DATA
+              </h2>
+              <p className="mb-3">
+                We do NOT sell your personal data. We only share data with:
+              </p>
+              <ol className="list-decimal space-y-2 pl-5">
+                <li>
+                  <strong>Service Providers:</strong> MTN, Glo, Airtel, 9mobile,
+                  DSTV, banks, payment gateways to deliver your requested service
+                </li>
+                <li>
+                  <strong>Legal Authorities:</strong> When required by law, court
+                  order, or to prevent fraud
+                </li>
+                <li>
+                  <strong>Business Partners:</strong> With your explicit consent
+                </li>
+              </ol>
+              <p className="mt-3">
+                All third parties are required to protect your data and use it
+                only for the purpose we specify.
               </p>
             </section>
 
-            <section className="border-t border-gray-200 pt-4">
+            {/* SECTION 5 */}
+            <section>
               <h2 className="mb-3 text-xl font-semibold text-gray-900">
-                8. Contact Us
+                5. DATA SECURITY
               </h2>
               <p>
-                If you have any questions about this Privacy Policy, please
-                contact us at:
+                We implement industry-standard security measures including SSL
+                encryption, firewalls, and role-based access controls to protect
+                your data from unauthorized access, loss, or misuse.
               </p>
-              <ul className="mt-2 list-none space-y-1">
+              <p className="mt-2">
+                However, no internet transmission is 100% secure. You are also
+                responsible for protecting your password and account access.
+              </p>
+            </section>
+
+            {/* SECTION 6 */}
+            <section>
+              <h2 className="mb-3 text-xl font-semibold text-gray-900">
+                6. COOKIES
+              </h2>
+              <p>
+                We use cookies to remember your login details, improve user
+                experience, and analyze website traffic.
+              </p>
+              <p className="mt-2">
+                You can disable cookies in your browser settings, but this may
+                limit access to key features of our platform.
+              </p>
+            </section>
+
+            {/* SECTION 7 */}
+            <section>
+              <h2 className="mb-3 text-xl font-semibold text-gray-900">
+                7. DATA RETENTION
+              </h2>
+              <p>
+                We retain your personal data for as long as your account is
+                active.
+              </p>
+              <p className="mt-2">
+                After account deactivation, we securely archive your data for up
+                to <strong>7 years</strong> to meet legal, tax, and regulatory
+                obligations under Nigerian law. After this period, data is
+                permanently and securely deleted.
+              </p>
+            </section>
+
+            {/* SECTION 8 */}
+            <section>
+              <h2 className="mb-3 text-xl font-semibold text-gray-900">
+                8. YOUR RIGHTS UNDER NDPA 2023
+              </h2>
+              <p className="mb-3">
+                Under the Nigeria Data Protection Act 2023, you have the right
+                to:
+              </p>
+              <ul className="list-disc space-y-2 pl-5">
+                <li>
+                  <strong>Access:</strong> Request a copy of the data we hold
+                  about you
+                </li>
+                <li>
+                  <strong>Correction:</strong> Request correction of inaccurate
+                  data
+                </li>
+                <li>
+                  <strong>Deletion:</strong> Request deletion of your data,
+                  subject to legal obligations
+                </li>
+                <li>
+                  <strong>Object:</strong> Object to processing for marketing
+                  purposes
+                </li>
+                <li>
+                  <strong>Withdraw Consent:</strong> Withdraw consent at any
+                  time
+                </li>
+              </ul>
+              <p className="mt-3">
+                To exercise these rights, email us at:{" "}
+                <a
+                  href="mailto:fmgdatasub@gmail.com"
+                  className="text-blue-600 hover:underline"
+                >
+                  fmgdatasub@gmail.com
+                </a>
+              </p>
+            </section>
+
+            {/* SECTION 9 */}
+            <section>
+              <h2 className="mb-3 text-xl font-semibold text-gray-900">
+                9. CHANGES TO THIS POLICY
+              </h2>
+              <p>
+                We may update this Privacy Policy. We will notify you of material
+                changes via email or app notification. Continued use means you
+                accept the updated policy.
+              </p>
+            </section>
+
+            {/* CONTACT US */}
+            <section className="border-t border-gray-200 pt-6">
+              <h2 className="mb-3 text-xl font-semibold text-gray-900">
+                Contact Us
+              </h2>
+              <p className="mb-2">
+                If you have questions about this Privacy Policy, contact our Data
+                Protection Officer at:
+              </p>
+              <ul className="list-none space-y-1">
                 <li>
                   <strong>Email:</strong>{" "}
                   <a
-                    href="mailto:support@fmgdatasub.com"
+                    href="mailto:fmgdatasub@gmail.com"
                     className="text-blue-600 hover:underline"
                   >
-                    support@fmgdatasub.com
+                    fmgdatasub@gmail.com
                   </a>
                 </li>
                 <li>
-                  <strong>Website:</strong>{" "}
-                  <a
-                    href="https://fmgdatasub.com"
-                    className="text-blue-600 hover:underline"
-                  >
-                    https://fmgdatasub.com
-                  </a>
+                  <strong>Location:</strong> Kano, Nigeria
                 </li>
               </ul>
             </section>

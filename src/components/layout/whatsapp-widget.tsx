@@ -12,7 +12,7 @@ interface WhatsAppWidgetProps {
 }
 
 export function WhatsAppWidget({
-  phoneNumber = "2348143641053",
+  phoneNumber = "2347026325635",
   message = "Hello! I need help with FMG.",
   className,
 }: WhatsAppWidgetProps) {

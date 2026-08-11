@@ -11,8 +11,8 @@ const servicesLinks = [
 const companyLinks = [
   { href: "/about", label: "About Us" },
   { href: "/contact", label: "Contact Support" },
-  { href: "/terms", label: "Terms of Service" },
-  { href: "/privacy", label: "Privacy Policy" },
+  { href: "/terms-of-service", label: "Terms of Service" },
+  { href: "/privacy-policy", label: "Privacy Policy" },
 ];
 
 export function Footer() {

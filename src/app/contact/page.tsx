@@ -24,7 +24,7 @@ export default function ContactPage() {
       title: "WhatsApp Chat",
       description: "Fastest response via WhatsApp",
       action: "Start Chat",
-      href: "https://wa.me/2348143641053",
+      href: "https://wa.me/2347026325635",
       color: "bg-green-100 text-green-600",
     },
     {
@@ -40,7 +40,7 @@ export default function ContactPage() {
       title: "Phone Support",
       description: "Available 9AM - 6PM",
       action: "Call Now",
-      href: "tel:+2348143641053",
+      href: "tel:+2347026325635",
       color: "bg-orange-100 text-orange-600",
     },
   ];

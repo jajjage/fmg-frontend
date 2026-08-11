@@ -11,11 +11,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useRegister } from "@/hooks/useAuth";
 import { useValidateAgentCode } from "@/hooks/useAgent";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
-import { useForm, type Resolver } from "react-hook-form";
+import { useForm, Controller, type Resolver } from "react-hook-form";
 import { z } from "zod";
 
 import { Eye, EyeOff, Loader2 } from "lucide-react";
@@ -60,6 +61,9 @@ const registerSchema = z
       (val) => (typeof val === "string" ? val.trim() : val),
       z.string()
     ),
+    agreeToTerms: z.boolean().refine((val) => val === true, {
+      message: "You must agree to the Terms of Service and Privacy Policy",
+    }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
@@ -93,6 +97,7 @@ export function RegisterForm() {
       agentCode: urlCode?.toUpperCase() || "",
       password: "",
       confirmPassword: "",
+      agreeToTerms: false,
     },
   });
 
@@ -422,12 +427,50 @@ export function RegisterForm() {
               >
                 {showConfirmPassword ? <EyeOff /> : <Eye />}
               </Button>
+          </div>
+          <div className="flex items-start space-x-2 pt-1">
+            <Controller
+              control={form.control}
+              name="agreeToTerms"
+              render={({ field }) => (
+                <Checkbox
+                  id="agreeToTerms"
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  className="mt-0.5"
+                />
+              )}
+            />
+            <div className="grid gap-1.5 leading-none">
+              <Label
+                htmlFor="agreeToTerms"
+                className="text-xs text-muted-foreground font-normal leading-relaxed cursor-pointer"
+              >
+                I agree to the{" "}
+                <a
+                  href="/terms-of-service"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-primary underline underline-offset-4 hover:text-primary/80"
+                >
+                  Terms of Service
+                </a>{" "}
+                and{" "}
+                <a
+                  href="/privacy-policy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-primary underline underline-offset-4 hover:text-primary/80"
+                >
+                  Privacy Policy
+                </a>
+              </Label>
+              {errors.agreeToTerms && (
+                <p className="text-xs text-red-500">
+                  {errors.agreeToTerms.message}
+                </p>
+              )}
             </div>
-            {errors.confirmPassword && (
-              <p className="text-sm text-red-500">
-                {errors.confirmPassword.message}
-              </p>
-            )}
           </div>
           <Button
             type="submit"
