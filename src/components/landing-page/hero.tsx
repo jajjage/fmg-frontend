@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export function Hero() {
   return (
-    <section className="w-full relative overflow-hidden bg-gradient-to-b from-primary/5 via-background to-background pt-8 pb-12 md:py-24 border-b border-gray-100">
+    <section className="w-full relative overflow-hidden bg-gradient-to-b from-primary/5 via-background to-background pt-8 pb-12 md:py-24 border-b border-border">
       {/* Mobile View */}
       <div className="relative flex min-h-[520px] items-center bg-cover bg-center md:hidden rounded-2xl mx-4 overflow-hidden shadow-lg">
         <Image
@@ -35,7 +35,7 @@ export function Hero() {
                 className="gap-2 font-bold text-base shadow-lg transition-all duration-150 active:scale-[0.97]"
                 asChild
               >
-                <Link href="/buy-data">
+                <Link href="/register">
                   <Wifi className="h-5 w-5" />
                   Buy Data Now
                 </Link>
@@ -46,7 +46,7 @@ export function Hero() {
                 className="gap-2 font-bold text-base transition-all duration-150 active:scale-[0.97]"
                 asChild
               >
-                <Link href="/buy-airtime">
+                <Link href="/register">
                   <Phone className="h-5 w-5" />
                   Buy Airtime
                 </Link>
@@ -82,7 +82,7 @@ export function Hero() {
               className="gap-2 px-8 py-6 text-base font-bold shadow-md transition-all duration-150 active:scale-[0.97]"
               asChild
             >
-              <Link href="/buy-data">
+              <Link href="/register">
                 <Wifi className="h-5 w-5" />
                 Buy Data
               </Link>
@@ -93,7 +93,7 @@ export function Hero() {
               className="gap-2 px-8 py-6 text-base font-bold transition-all duration-150 active:scale-[0.97]"
               asChild
             >
-              <Link href="/buy-airtime">
+              <Link href="/register">
                 <Phone className="h-5 w-5" />
                 Buy Airtime
               </Link>
