@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Twitter } from "lucide-react";
+import { Facebook, Instagram, MessageCircle, Twitter } from "lucide-react";
 import Link from "next/link";
 
 const servicesLinks = [
@@ -11,6 +11,11 @@ const servicesLinks = [
 const companyLinks = [
   { href: "/about", label: "About Us" },
   { href: "/contact", label: "Contact Support" },
+  {
+    href: "https://whatsapp.com/channel/0029VbDb8rCCBtxEbfhWhw3Q",
+    label: "WhatsApp Channel",
+    external: true,
+  },
   { href: "/terms-of-service", label: "Terms of Service" },
   { href: "/privacy-policy", label: "Privacy Policy" },
 ];
@@ -29,6 +34,15 @@ export function Footer() {
               Nigeria.
             </p>
             <div className="mt-4 flex space-x-4">
+              <Link
+                href="https://whatsapp.com/channel/0029VbDb8rCCBtxEbfhWhw3Q"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Join our WhatsApp Channel"
+                className="hover:text-foreground text-emerald-600 transition-colors"
+              >
+                <MessageCircle className="h-6 w-6" />
+              </Link>
               <Link
                 href="#"
                 className="hover:text-foreground transition-colors"
@@ -71,6 +85,8 @@ export function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
+                    target={link.href.startsWith("http") ? "_blank" : undefined}
+                    rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
                     className="hover:text-foreground text-sm transition-colors"
                   >
                     {link.label}

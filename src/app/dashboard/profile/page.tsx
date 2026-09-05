@@ -10,12 +10,13 @@ import { useAuth, useLogout } from "@/hooks/useAuth";
 import { useResellerUpgradeStatus } from "@/hooks/useReseller";
 import {
   ChevronRight,
+  ExternalLink,
   HelpCircle,
   LogOut,
+  MessageCircle,
   Shield,
   Sparkles,
   User,
-  Wallet,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -55,12 +56,6 @@ export default function ProfilePage() {
           href: "/dashboard/profile/personal-info",
           description: "Name, Email, Phone",
         },
-        {
-          label: "Wallet Settings",
-          icon: Wallet,
-          href: "/dashboard/profile/wallet",
-          description: "Bank Accounts, Cards",
-        },
       ],
     },
     {
@@ -75,13 +70,20 @@ export default function ProfilePage() {
       ],
     },
     {
-      title: "Support",
+      title: "Support & Community",
       items: [
+        {
+          label: "WhatsApp Channel",
+          icon: MessageCircle,
+          iconColor: "text-emerald-600 bg-emerald-100",
+          href: "https://whatsapp.com/channel/0029VbDb8rCCBtxEbfhWhw3Q",
+          description: "Follow for announcements, discounts & daily updates",
+        },
         {
           label: "Help & Support",
           icon: HelpCircle,
           href: "/dashboard/help",
-          description: "FAQ, Contact Us",
+          description: "FAQ, WhatsApp & Contact Us",
         },
       ],
     },
@@ -124,9 +126,17 @@ export default function ProfilePage() {
                   <div key={item.label}>
                     <Link
                       href={item.href}
+                      target={item.href.startsWith("http") ? "_blank" : undefined}
+                      rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
                       className="hover:bg-muted/50 flex items-center gap-4 p-4 transition-colors"
                     >
-                      <div className="bg-primary/10 text-primary flex size-10 items-center justify-center rounded-full">
+                      <div
+                        className={
+                          item.iconColor
+                            ? `flex size-10 items-center justify-center rounded-full ${item.iconColor}`
+                            : "bg-primary/10 text-primary flex size-10 items-center justify-center rounded-full"
+                        }
+                      >
                         <item.icon className="size-5" />
                       </div>
                       <div className="flex-1">
@@ -135,7 +145,11 @@ export default function ProfilePage() {
                           {item.description}
                         </p>
                       </div>
-                      <ChevronRight className="text-muted-foreground/50 size-5" />
+                      {item.href.startsWith("http") ? (
+                        <ExternalLink className="size-4 text-emerald-600" />
+                      ) : (
+                        <ChevronRight className="text-muted-foreground/50 size-5" />
+                      )}
                     </Link>
                     {index < group.items.length - 1 && <Separator />}
                   </div>

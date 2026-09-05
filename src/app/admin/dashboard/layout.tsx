@@ -29,6 +29,7 @@ import {
   HomeIcon,
   LandmarkIcon,
   LogOutIcon,
+  MegaphoneIcon,
   PackageIcon,
   PercentIcon,
   RadioIcon,
@@ -53,6 +54,11 @@ const navItems = [
     title: "Analytics",
     href: "/admin/dashboard/analytics",
     icon: BarChart3Icon,
+  },
+  {
+    title: "Announcements",
+    href: "/admin/dashboard/announcements",
+    icon: MegaphoneIcon,
   },
   {
     title: "Audit Log",

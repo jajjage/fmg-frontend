@@ -21,26 +21,34 @@ export default function ContactPage() {
   const contactOptions = [
     {
       icon: MessageCircle,
+      title: "WhatsApp Channel",
+      description: "Official announcements & daily promos",
+      action: "Join Channel",
+      href: "https://whatsapp.com/channel/0029VbDb8rCCBtxEbfhWhw3Q",
+      color: "bg-emerald-100 text-emerald-600",
+    },
+    {
+      icon: MessageCircle,
       title: "WhatsApp Chat",
       description: "Fastest response via WhatsApp",
       action: "Start Chat",
-      href: "https://wa.me/2347026325635",
+      href: "https://wa.me/2347082548106",
       color: "bg-green-100 text-green-600",
     },
     {
       icon: Mail,
       title: "Email Support",
-      description: "support@fmgdatasub.com",
+      description: "fmgdatasub@gmail.com",
       action: "Send Email",
-      href: "mailto:support@fmgdatasub.com",
+      href: "mailto:fmgdatasub@gmail.com",
       color: "bg-blue-100 text-blue-600",
     },
     {
       icon: Phone,
       title: "Phone Support",
-      description: "Available 9AM - 6PM",
+      description: "07082548106 (Available 9AM - 6PM)",
       action: "Call Now",
-      href: "tel:+2347026325635",
+      href: "tel:07082548106",
       color: "bg-orange-100 text-orange-600",
     },
   ];
@@ -49,7 +57,7 @@ export default function ContactPage() {
     <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex-1">
-        <div className="container mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="container mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
             <h1 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
               Contact Support
@@ -60,7 +68,7 @@ export default function ContactPage() {
             </p>
           </div>
 
-          <div className="mb-12 grid gap-6 md:grid-cols-3">
+          <div className="mb-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {contactOptions.map((option) => (
               <Card
                 key={option.title}
