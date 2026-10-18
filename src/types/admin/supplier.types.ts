@@ -15,6 +15,11 @@ export interface Supplier {
   isActive: boolean;
   createdAt?: string;
   updatedAt?: string;
+  parentSupplierId?: string | null;
+  protocolKey?: "adex_v1" | "msorg_v1" | null;
+  protocolFamilyId?: string | null;
+  supplierKind?: "parent" | "child";
+  isRoutable?: boolean;
 }
 
 // ============= API Responses =============
@@ -28,10 +33,14 @@ export interface SupplierListResponse {
 export interface CreateSupplierRequest {
   name: string;
   slug: string;
-  apiBase: string;
-  apiKey: string;
+  apiBase?: string;
+  apiKey?: string;
   priorityInt: number;
   isActive: boolean;
+  parentSupplierId?: string | null;
+  protocolKey?: "adex_v1" | "msorg_v1" | null;
+  protocolFamilyId?: string | null;
+  supplierKind?: "parent" | "child";
 }
 
 export interface UpdateSupplierRequest {
@@ -40,4 +49,7 @@ export interface UpdateSupplierRequest {
   apiKey?: string;
   priorityInt?: number;
   isActive?: boolean;
+  parentSupplierId?: string | null;
+  protocolKey?: "adex_v1" | "msorg_v1" | null;
+  protocolFamilyId?: string | null;
 }

@@ -5,6 +5,7 @@ import {
   ApiKeyList,
   ResellerApiAccessFallback,
 } from "@/components/features/reseller";
+import { AdexCredentialsManager } from "@/components/features/reseller/AdexCredentialsManager";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
@@ -22,7 +23,7 @@ export default function ApiKeysPage() {
   const { canAccessApi, shouldShowProvisionWarning } = useResellerApiAccess();
 
   // Check if user is a reseller
-  if (!isLoading && user?.role !== "reseller") {
+  if (!isLoading && user?.role !== "api_user") {
     redirect("/dashboard");
   }
 
@@ -57,7 +58,7 @@ export default function ApiKeysPage() {
                 </AlertDescription>
               </Alert>
             ) : null}
-            <ApiKeyList />
+            <div className="space-y-6"><ApiKeyList /><AdexCredentialsManager /></div>
           </div>
         )}
       </div>

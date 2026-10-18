@@ -2,7 +2,6 @@
 
 import { BottomNav } from "@/components/features/dashboard/bottom-nav";
 import {
-  PurchaseConsole,
   ResellerApiAccessFallback,
 } from "@/components/features/reseller";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -12,12 +11,13 @@ import { useResellerApiAccess } from "@/hooks/useReseller";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { V1ApiConsole } from "@/components/features/reseller/DeveloperTools";
 
 export default function PurchaseConsolePage() {
   const { user, isLoading } = useAuth();
   const { canAccessApi, shouldShowProvisionWarning } = useResellerApiAccess();
 
-  if (!isLoading && user?.role !== "reseller") {
+  if (!isLoading && user?.role !== "api_user") {
     redirect("/dashboard");
   }
 
@@ -51,7 +51,7 @@ export default function PurchaseConsolePage() {
                 </AlertDescription>
               </Alert>
             ) : null}
-            <PurchaseConsole />
+            <V1ApiConsole />
           </div>
         )}
       </div>

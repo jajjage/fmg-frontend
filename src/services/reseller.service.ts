@@ -7,6 +7,8 @@ import apiClient from "@/lib/api-client";
 import type { ApiResponse } from "@/types/api.types";
 import type {
   ApiKeysListData,
+  AdexCredential,
+  AdexCredentialSecret,
   ApiPurchaseStatusResponseData,
   BulkTopupRequest,
   BulkTopupResponseData,
@@ -93,6 +95,10 @@ const normalizePurchaseAnalytics = (raw: any): ResellerPurchaseAnalytics => ({
 });
 
 export const resellerService = {
+  getAdexCredentials: async () => (await apiClient.get<ApiResponse<{ credentials: AdexCredential[] }>>("/reseller/credentials/adex")).data,
+  createAdexCredential: async (name: string) => (await apiClient.post<ApiResponse<AdexCredentialSecret>>("/reseller/credentials/adex", { name })).data,
+  resetAdexCredential: async (id: string) => (await apiClient.post<ApiResponse<AdexCredentialSecret>>(`/reseller/credentials/adex/${id}/reset`)).data,
+  revokeAdexCredential: async (id: string) => (await apiClient.delete<ApiResponse<null>>(`/reseller/credentials/adex/${id}`)).data,
   // ============= Bulk Topup =============
 
   /**

@@ -42,6 +42,7 @@ const resellerItems = [
 
 const resellerApiItems = [
   { label: "API Keys", icon: Key, href: "/dashboard/reseller/api-keys" },
+  { label: "ADEX Credentials", icon: Key, href: "/dashboard/reseller/api-keys#adex-credentials" },
   {
     label: "Webhook Config",
     icon: Link2,
@@ -116,13 +117,13 @@ export function DesktopSidebar({ className }: { className?: string }) {
           ))}
 
           {/* Reseller Section - Only visible to resellers */}
-          {isReseller && (
+          {(isReseller || user?.role === "api_user") && (
             <>
               <Separator className="my-2" />
               <span className="text-muted-foreground px-3 text-xs font-medium tracking-wider uppercase">
-                Reseller Tools
+                {user?.role === "api_user" ? "Developer Tools" : "Reseller Tools"}
               </span>
-              {resellerItems.map((item) => (
+              {isReseller && resellerItems.map((item) => (
                 <Link
                   href={item.href}
                   key={item.label}

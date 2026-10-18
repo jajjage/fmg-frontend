@@ -40,10 +40,11 @@ export function BottomNav() {
   // Show "Become a Reseller" only for regular users
   const showBecomeReseller = user?.role === "user";
   const isReseller = user?.role === "reseller";
+  const isApiUser = user?.role === "api_user";
 
   // Build nav items based on user role
-  const navItems = isReseller
-    ? [...baseNavItems.slice(0, 2), resellerNavItem, ...baseNavItems.slice(2)]
+  const navItems = isReseller || isApiUser
+    ? [...baseNavItems.slice(0, 2), { ...resellerNavItem, label: isApiUser ? "API" : "Reseller" }, ...baseNavItems.slice(2)]
     : baseNavItems;
 
   // Check pending status on mount and clear if user is now reseller

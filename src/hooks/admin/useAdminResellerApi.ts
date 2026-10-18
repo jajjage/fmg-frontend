@@ -17,6 +17,7 @@ const resellerApiKeys = {
   purchaseAnalyticsOverview: (
     params?: AdminResellerPurchaseAnalyticsQueryParams
   ) => [...resellerApiKeys.all, "purchase-analytics-overview", params] as const,
+  unifiedOperationsOverview: (params?: import("@/types/admin/reseller-api.types").UnifiedApiOperationsOverviewParams) => [...resellerApiKeys.all, "unified-operations-overview", params] as const,
 };
 
 export function useResellerApiCallbacksOverview() {
@@ -55,4 +56,7 @@ export function useAdminResellerPurchaseAnalyticsOverview(
     placeholderData: keepPreviousData,
     staleTime: 30 * 1000,
   });
+}
+export function useAdminUnifiedApiOperationsOverview(params?: import("@/types/admin/reseller-api.types").UnifiedApiOperationsOverviewParams) {
+  return useQuery({queryKey: resellerApiKeys.unifiedOperationsOverview(params), queryFn: () => adminResellerApiService.getUnifiedOperationsOverview(params), placeholderData: keepPreviousData, staleTime: 30 * 1000});
 }

@@ -32,7 +32,7 @@ export default function ResellerHubPage() {
   const { canAccessApi } = useResellerApiAccess();
 
   // Check if user is a reseller
-  if (!isLoading && user?.role !== "reseller") {
+  if (!isLoading && user?.role !== "reseller" && user?.role !== "api_user") {
     redirect("/dashboard");
   }
 
@@ -54,6 +54,13 @@ export default function ResellerHubPage() {
   ];
 
   const apiFeatures = [
+    {
+      title: "ADEX Credentials",
+      description: "Manage credentials for ADEX-compatible client integrations",
+      icon: Key,
+      href: "/dashboard/reseller/api-keys#adex-credentials",
+      color: "text-cyan-600",
+    },
     {
       title: "API Keys",
       description: "Manage API keys for your integrations",
@@ -88,7 +95,7 @@ export default function ResellerHubPage() {
     <>
       <div className="container mx-auto max-w-4xl px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold">Reseller Hub</h1>
+          <h1 className="text-3xl font-bold">{user?.role === "api_user" ? "Developer Console" : "Reseller Hub"}</h1>
           <p className="text-muted-foreground mt-2">
             Tools to help you run your reseller business
           </p>
@@ -102,7 +109,7 @@ export default function ResellerHubPage() {
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {[
-            ...alwaysAvailableFeatures,
+            ...(user?.role === "reseller" ? alwaysAvailableFeatures : []),
             ...(!isLoading && canAccessApi ? apiFeatures : []),
           ].map((feature) => (
             <Card

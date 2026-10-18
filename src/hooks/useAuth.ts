@@ -470,7 +470,7 @@ export function useLogin(expectedRole?: "user" | "admin") {
       if (expectedRole && user?.role) {
         // Allow "reseller" to login as "user" (they share the same dashboard)
         const isResellerLogin =
-          expectedRole === "user" && user.role === "reseller";
+          expectedRole === "user" && (user.role === "reseller" || user.role === "api_user");
 
         if (expectedRole !== user.role && !isResellerLogin) {
           console.warn(

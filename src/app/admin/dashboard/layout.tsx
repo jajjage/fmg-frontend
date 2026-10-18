@@ -131,6 +131,11 @@ const navItems = [
     icon: PercentIcon,
   },
   {
+    title: "Private Prices",
+    href: "/admin/dashboard/private-pricing",
+    icon: PercentIcon,
+  },
+  {
     title: "Products",
     href: "/admin/dashboard/products",
     icon: PackageIcon,
@@ -170,6 +175,21 @@ const navItems = [
   //   href: "/admin/dashboard/settings",
   //   icon: SettingsIcon,
   // },
+  {
+    title: "Supplier Errors",
+    href: "/admin/dashboard/supplier-errors",
+    icon: WebhookIcon,
+  },
+  {
+    title: "Categories",
+    href: "/admin/dashboard/categories",
+    icon: PackageIcon,
+  },
+  {
+    title: "App Updates",
+    href: "/admin/dashboard/app-updates",
+    icon: PackageIcon,
+  },
 ];
 
 export default function AdminDashboardLayout({

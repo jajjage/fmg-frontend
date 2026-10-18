@@ -154,4 +154,10 @@ export const adminResellerApiService = {
       data: mapPurchaseAnalytics(response.data?.data ?? {}),
     };
   },
+  getUnifiedOperationsOverview: async (params?: import("@/types/admin/reseller-api.types").UnifiedApiOperationsOverviewParams): Promise<ApiResponse<import("@/types/admin/reseller-api.types").UnifiedApiOperationsOverview>> => {
+    const response = await apiClient.get<ApiResponse<import("@/types/admin/reseller-api.types").UnifiedApiOperationsOverview>>(
+      BASE_PATH + "/operations/overview", { params }
+    );
+    return response.data;
+  },
 };

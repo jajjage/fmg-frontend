@@ -7,6 +7,7 @@
 
 import { useAuth } from "@/hooks/useAuth";
 import { resellerService } from "@/services/reseller.service";
+import { canAccessDeveloperTools } from "@/lib/api-access";
 import type {
   CreateApiPurchaseHeaders,
   CreateApiPurchaseQueryParams,
@@ -141,12 +142,14 @@ export function useResellerApiAccess() {
   const { user } = useAuth();
 
   const isReseller = user?.role === "reseller";
+  const isApiUser = user?.role === "api_user";
   const hasApiPermission = Boolean(
     user?.permissions?.includes("reseller.api_access")
   );
 
   return {
-    canAccessApi: isReseller,
+    canAccessApi: canAccessDeveloperTools(user?.role, user?.permissions),
+    isApiUser,
     isReseller,
     hasApiPermission,
     isPermissionFallback: false,
