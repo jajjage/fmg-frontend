@@ -156,8 +156,8 @@ describe("PinVerificationModal", () => {
     });
   });
 
-  describe("Rate Limiting", () => {
-    it("should show error when blocked", async () => {
+  describe("Attempt handling", () => {
+    it("should remain usable when the legacy store reports a block", async () => {
       mockUseSecurityStore.mockReturnValue({
         isBlocked: true,
         recordPinAttempt: mockRecordPinAttempt,
@@ -165,9 +165,9 @@ describe("PinVerificationModal", () => {
 
       renderModal();
 
-      expect(screen.getByText(/Too many failed attempts/i)).toBeInTheDocument();
       const input = screen.getByRole("textbox");
-      expect(input).toBeDisabled();
+      expect(input).not.toBeDisabled();
+      expect(screen.queryByText(/Too many failed attempts/i)).not.toBeInTheDocument();
     });
   });
 

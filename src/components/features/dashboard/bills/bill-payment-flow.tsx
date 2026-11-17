@@ -39,6 +39,10 @@ import {
   BillVariation,
   BillValidationResult,
 } from "@/types/bill-payment.types";
+import {
+  MAX_PIN_ATTEMPTS,
+  useSecurityStore,
+} from "@/store/securityStore";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   BadgeCheck,
@@ -52,6 +56,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 interface BillPaymentFlowProps {
@@ -104,7 +109,9 @@ export function BillPaymentFlow({ category }: BillPaymentFlowProps) {
   const copy = serviceCopy[category];
   const ServiceIcon = copy.icon;
   const queryClient = useQueryClient();
+  const router = useRouter();
   const { user } = useAuth();
+  const { recordPinAttempt } = useSecurityStore();
   const idPrefix = useId();
   const paymentCounterRef = useRef(0);
   const { data: billers = [], isLoading: isLoadingBillers } =
@@ -289,6 +296,7 @@ export function BillPaymentFlow({ category }: BillPaymentFlowProps) {
       },
       {
         onSuccess: (response) => {
+          if (auth.pin) recordPinAttempt(true);
           setLastPayment(response.data || null);
           setShowBiometricModal(false);
           setShowPinModal(false);
@@ -307,6 +315,15 @@ export function BillPaymentFlow({ category }: BillPaymentFlowProps) {
             (message.toLowerCase().includes("pin") ||
               message.toLowerCase().includes("invalid"))
           ) {
+            const attempts = recordPinAttempt(false);
+            if (attempts >= MAX_PIN_ATTEMPTS) {
+              setShowPinModal(false);
+              setErrorMessage("");
+              router.push(
+                `/dashboard/profile/security/pin?returnUrl=${encodeURIComponent(`/dashboard/${category}`)}`
+              );
+              return;
+            }
             setErrorMessage(message);
             return;
           }
@@ -731,6 +748,11 @@ export function BillPaymentFlow({ category }: BillPaymentFlowProps) {
         phoneNumber={phone}
         isVerifying={payMutation.isPending}
         errorMessage={errorMessage}
+        onForgotPin={() =>
+          router.push(
+            `/dashboard/profile/security/pin?returnUrl=${encodeURIComponent(`/dashboard/${category}`)}`
+          )
+        }
       />
 
       <PinSetupModal

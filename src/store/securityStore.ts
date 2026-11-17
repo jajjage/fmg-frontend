@@ -6,14 +6,18 @@ import { persist } from "zustand/middleware";
 interface SecurityState {
   // PIN attempt tracking (for transactions)
   pinAttempts: number;
+  /** @deprecated Kept for persisted-state compatibility. Client flows no longer lock here. */
   isBlocked: boolean;
+  /** @deprecated Kept for persisted-state compatibility. Client flows no longer lock here. */
   blockExpireTime: number | null;
 
   // Actions
   initialize: () => void;
-  recordPinAttempt: (success: boolean) => void;
+  recordPinAttempt: (success: boolean) => number;
   cleanup: () => void;
 }
+
+export const MAX_PIN_ATTEMPTS = 5;
 
 export const useSecurityStore = create<SecurityState>()(
   persist(
@@ -23,89 +27,61 @@ export const useSecurityStore = create<SecurityState>()(
       isBlocked: false as boolean,
       blockExpireTime: null as number | null,
 
-      /**
-       * Initialize security store
-       * - Set up check interval for unblocking
-       */
       initialize: () => {
-        // Set up check interval
-        const checkInterval = setInterval(() => {
-          const state = get();
-          const now = Date.now();
-
-          // Check if PIN block expired
-          if (
-            state.isBlocked &&
-            state.blockExpireTime &&
-            now > state.blockExpireTime
-          ) {
-            console.log("[Security] PIN block expired");
-            set({
-              isBlocked: false,
-              blockExpireTime: null,
-              pinAttempts: 0,
-            });
-          }
-        }, 1000);
-
-        (get as any)._checkInterval = checkInterval;
+        // Attempt handling is driven by the transaction flow. There is no
+        // client-side timer/block because it could leave the PIN modal stuck.
       },
 
       /**
        * Track PIN attempts for transactions
        * - Success: Clear attempts
-       * - Failure: Increment and block after 5 attempts
+       * - Failure: Increment up to the reset threshold. The caller navigates
+       *   to PIN reset on the fifth failed transaction attempt.
        */
       recordPinAttempt: (success: boolean) => {
         if (success) {
-          console.log("[Security] PIN attempt successful");
           set({
             pinAttempts: 0,
             isBlocked: false,
             blockExpireTime: null,
           });
-        } else {
-          const currentAttempts = get().pinAttempts;
-          const newAttempts = currentAttempts + 1;
-
-          console.log("[Security] PIN attempt failed", {
-            attempt: newAttempts,
-            maxAttempts: 5,
-          });
-
-          if (newAttempts >= 5) {
-            // Block for 5 minutes after 5 failed attempts
-            const blockUntil = Date.now() + 5 * 60 * 1000;
-            console.log("[Security] PIN blocked for 5 minutes");
-            set({
-              pinAttempts: newAttempts,
-              isBlocked: true,
-              blockExpireTime: blockUntil,
-            });
-          } else {
-            set({ pinAttempts: newAttempts });
-          }
+          return 0;
         }
+
+        const newAttempts = Math.min(
+          get().pinAttempts + 1,
+          MAX_PIN_ATTEMPTS
+        );
+        set({
+          pinAttempts: newAttempts,
+          // Do not persist a UI lock. The fifth failure is handled by the
+          // transaction caller, which routes the user to PIN reset.
+          isBlocked: false,
+          blockExpireTime: null,
+        });
+        return newAttempts;
       },
 
       /**
        * Cleanup - called on app unmount
        */
       cleanup: () => {
-        const interval = (get as any)._checkInterval;
-        if (interval) {
-          clearInterval(interval);
-          console.log("[Security] Cleanup - interval cleared");
-        }
+        // Retained as a no-op for existing callers.
       },
     }),
     {
       name: "security-store",
-      partialize: (state: any) => ({
-        // We only persist blocking state to prevent bypassing block by refresh
-        pinAttempts: state.pinAttempts,
-        isBlocked: state.isBlocked,
-        blockExpireTime: state.blockExpireTime,
+      partialize: (state: any) => ({ pinAttempts: state.pinAttempts }),
+      // Ignore legacy persisted lock fields so a user already stuck in the
+      // previous five-minute block can use the PIN modal again.
+      merge: (persistedState: any, currentState) => ({
+        ...currentState,
+        pinAttempts: Math.min(
+          Number(persistedState?.pinAttempts) || 0,
+          MAX_PIN_ATTEMPTS
+        ),
+        isBlocked: false,
+        blockExpireTime: null,
       }),
     }
   )

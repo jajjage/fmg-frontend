@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/hooks/useAuth";
 import { useSetPin } from "@/hooks/useUser";
+import { useSecurityStore } from "@/store/securityStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -34,6 +35,7 @@ interface SetPinFormProps {
 export function SetPinForm({ onSuccess }: SetPinFormProps) {
   const { user } = useAuth();
   const { mutate: setPin, isPending } = useSetPin();
+  const { recordPinAttempt } = useSecurityStore();
   const router = useRouter();
   const searchParams = useSearchParams();
   const returnUrl = searchParams.get("returnUrl");
@@ -94,6 +96,7 @@ export function SetPinForm({ onSuccess }: SetPinFormProps) {
       },
       {
         onSuccess: () => {
+          recordPinAttempt(true);
           toast.success(
             `Transaction PIN ${hasPin ? "updated" : "set"} successfully`
           );

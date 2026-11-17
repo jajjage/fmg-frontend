@@ -6,7 +6,10 @@ import { useAuth } from "@/hooks/useAuth";
 import { useProducts } from "@/hooks/useProducts";
 import { useTopup } from "@/hooks/useTopup";
 import { useTransaction } from "@/hooks/useWallet";
-import { useSecurityStore } from "@/store/securityStore";
+import {
+  MAX_PIN_ATTEMPTS,
+  useSecurityStore,
+} from "@/store/securityStore";
 import { Product } from "@/types/product.types";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -249,7 +252,16 @@ export function AirtimePlans() {
             (msg.toLowerCase().includes("pin") ||
               msg.toLowerCase().includes("invalid"))
           ) {
-            recordPinAttempt(false);
+            const attempts = recordPinAttempt(false);
+            if (attempts >= MAX_PIN_ATTEMPTS) {
+              setShowPinModal(false);
+              setPendingPaymentData(null);
+              setErrorMessage("");
+              router.push(
+                "/dashboard/profile/security/pin?returnUrl=%2Fdashboard%2Fairtime"
+              );
+              return;
+            }
             setErrorMessage(msg);
           } else {
             setShowPinModal(false);

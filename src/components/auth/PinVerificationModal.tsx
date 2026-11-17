@@ -8,7 +8,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useSecurityStore } from "@/store/securityStore";
 import "@/styles/pin-cursor.css";
 import { AlertCircle, Loader2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -106,8 +105,6 @@ export function PinVerificationModal({
 
   const displayError = internalError || errorMessage;
 
-  const { isBlocked } = useSecurityStore();
-
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Focus input on mount
@@ -154,7 +151,6 @@ export function PinVerificationModal({
 
       isVerifying,
 
-      isBlocked,
     });
 
     if (loading || isVerifying) {
@@ -171,14 +167,6 @@ export function PinVerificationModal({
       );
 
       setInternalError("PIN must be 4 digits");
-
-      return;
-    }
-
-    if (isBlocked) {
-      console.log("[PinVerificationModal] Blocked - too many attempts");
-
-      setInternalError("Too many failed attempts. Please try again later.");
 
       return;
     }
@@ -215,14 +203,14 @@ export function PinVerificationModal({
 
   // Keep input focused when not loading/verifying
   useEffect(() => {
-    if (open && !loading && !isVerifying && !isBlocked) {
+    if (open && !loading && !isVerifying) {
       // Small timeout to ensure DOM is ready and not conflicting with disable state updates
       const timer = setTimeout(() => {
         inputRef.current?.focus();
       }, 10);
       return () => clearTimeout(timer);
     }
-  }, [open, loading, isVerifying, isBlocked]);
+  }, [open, loading, isVerifying]);
 
   return (
     <Dialog
@@ -300,7 +288,7 @@ export function PinVerificationModal({
                 onKeyDown={handleKeyDown}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
-                disabled={loading || isBlocked || isVerifying}
+                disabled={loading || isVerifying}
                 maxLength={4}
                 className="absolute inset-0 cursor-text opacity-0"
                 placeholder=""
@@ -324,16 +312,6 @@ export function PinVerificationModal({
             </div>
           )}
 
-          {/* Blocked Warning */}
-
-          {isBlocked && (
-            <div className="rounded-lg border border-amber-200 bg-amber-50 p-3">
-              <p className="text-sm text-amber-700">
-                Too many failed attempts. Please try again later.
-              </p>
-            </div>
-          )}
-
           {/* Buttons */}
 
           <div className="flex gap-3 pt-2">
@@ -347,7 +325,7 @@ export function PinVerificationModal({
 
             <Button
               onClick={handleSubmit}
-              disabled={pin.length !== 4 || loading || isBlocked || isVerifying}
+              disabled={pin.length !== 4 || loading || isVerifying}
               className="bg-primary hover:bg-primary/90 flex-1"
             >
               {loading || isVerifying ? (

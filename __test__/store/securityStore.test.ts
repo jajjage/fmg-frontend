@@ -75,43 +75,33 @@ describe("useSecurityStore", () => {
       expect(result.current.isBlocked).toBe(false);
     });
 
-    it("should block after 5 failed attempts", () => {
+    it("should reach the reset threshold after 5 failed attempts without blocking the UI", () => {
+      const { result } = renderHook(() => useSecurityStore());
+
+      let attempts = 0;
+      act(() => {
+        for (let index = 0; index < 5; index += 1) {
+          attempts = result.current.recordPinAttempt(false);
+        }
+      });
+
+      expect(attempts).toBe(5);
+      expect(result.current.pinAttempts).toBe(5);
+      expect(result.current.isBlocked).toBe(false);
+      expect(result.current.blockExpireTime).toBeNull();
+    });
+
+    it("should keep the attempt count capped at the reset threshold", () => {
       const { result } = renderHook(() => useSecurityStore());
 
       act(() => {
-        result.current.recordPinAttempt(false);
-        result.current.recordPinAttempt(false);
-        result.current.recordPinAttempt(false);
-        result.current.recordPinAttempt(false);
-        result.current.recordPinAttempt(false);
+        for (let index = 0; index < 6; index += 1) {
+          result.current.recordPinAttempt(false);
+        }
       });
 
       expect(result.current.pinAttempts).toBe(5);
-      expect(result.current.isBlocked).toBe(true);
-      expect(result.current.blockExpireTime).not.toBeNull();
-    });
-
-    it("should unblock after expiration time", () => {
-      const { result } = renderHook(() => useSecurityStore());
-
-      act(() => {
-        result.current.initialize();
-        result.current.recordPinAttempt(false);
-        result.current.recordPinAttempt(false);
-        result.current.recordPinAttempt(false);
-        result.current.recordPinAttempt(false);
-        result.current.recordPinAttempt(false);
-      });
-
-      expect(result.current.isBlocked).toBe(true);
-
-      // Advance time by 5 minutes + 1 second
-      act(() => {
-        vi.advanceTimersByTime(5 * 60 * 1000 + 1000);
-      });
-
       expect(result.current.isBlocked).toBe(false);
-      expect(result.current.pinAttempts).toBe(0);
     });
   });
 

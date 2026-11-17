@@ -14,7 +14,10 @@ import { useTopup } from "@/hooks/useTopup";
 import { useEligibleOffers } from "@/hooks/useUserOffers";
 import { useTransaction } from "@/hooks/useWallet";
 import { detectNetworkProvider } from "@/lib/network-utils";
-import { useSecurityStore } from "@/store/securityStore";
+import {
+  MAX_PIN_ATTEMPTS,
+  useSecurityStore,
+} from "@/store/securityStore";
 import { Product } from "@/types/product.types";
 import { useQueryClient } from "@tanstack/react-query";
 import { Grid, LayoutList } from "lucide-react";
@@ -42,7 +45,7 @@ export function DataPlans({
   const router = useRouter();
   const showCategories = productType === "data";
   const { user, refetch: refetchUser } = useAuth();
-  const { recordPinAttempt, isBlocked: _isBlocked } = useSecurityStore();
+  const { recordPinAttempt } = useSecurityStore();
   const topupMutation = useTopup();
   const queryClient = useQueryClient();
 
@@ -502,7 +505,16 @@ export function DataPlans({
             (msg.toLowerCase().includes("pin") ||
               msg.toLowerCase().includes("invalid"))
           ) {
-            recordPinAttempt(false);
+            const attempts = recordPinAttempt(false);
+            if (attempts >= MAX_PIN_ATTEMPTS) {
+              setShowPinModal(false);
+              setPendingPaymentData(null);
+              setErrorMessage("");
+              router.push(
+                `/dashboard/profile/security/pin?returnUrl=${encodeURIComponent(returnUrl)}`
+              );
+              return;
+            }
             setErrorMessage(msg);
             // Keep PIN modal open to show error
           } else {
