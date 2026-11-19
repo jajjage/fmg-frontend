@@ -233,6 +233,63 @@ describe("adminAnalyticsService", () => {
     });
   });
 
+  describe("getTopupProductDailySnapshot", () => {
+    it("normalizes the backend dailySalesSnapshots response for the analytics UI", async () => {
+      mockApiClient.get.mockResolvedValue({
+        data: {
+          success: true,
+          data: {
+            dailySalesSnapshots: [
+              {
+                date: "2026-11-19",
+                totalSuccessfulTopups: 4,
+                totalReceivedTransactions: 2,
+                bestPerformingProduct: {
+                  productId: "product-1",
+                  productCode: "DATA-1",
+                  productName: "1GB Data",
+                  productType: "data",
+                  productSlug: "1gb-data",
+                  operatorName: "MTN",
+                  successfulCount: 4,
+                  totalAmount: 1200,
+                },
+              },
+            ],
+            summary: {
+              totalDays: 1,
+              totalSuccessfulTopups: 4,
+              totalReceivedTransactions: 2,
+              overallBestPerformingProduct: {
+                productId: "product-1",
+                productCode: "DATA-1",
+                productName: "1GB Data",
+                productType: "data",
+                productSlug: "1gb-data",
+                operatorName: "MTN",
+                successfulCount: 4,
+                totalAmount: 1200,
+              },
+            },
+          },
+        },
+      });
+
+      const params = { fromDate: "2026-11-13", toDate: "2026-11-19" };
+      const result = await adminAnalyticsService.getTopupProductDailySnapshot(
+        params
+      );
+
+      expect(result.data?.dailySnapshots).toHaveLength(1);
+      expect(result.data?.dailySnapshots[0].products).toEqual([]);
+      expect(result.data?.summary.topProducts[0].productName).toBe("1GB Data");
+      expect(result.data?.period).toEqual({
+        from: params.fromDate,
+        to: params.toDate,
+      });
+    });
+  });
+
   describe("getDailyMetrics", () => {
     it("should fetch daily metrics with params", async () => {
       const mockData = [

@@ -27,6 +27,63 @@ import { ApiResponse } from "@/types/api.types";
 
 const BASE_PATH = "/admin/analytics";
 
+type ProductSnapshotPayload = {
+  period?: DailyProductSnapshotResponse["period"];
+  summary?: {
+    totalSuccessfulTopups?: number;
+    totalReceivedTransactions?: number;
+    topProducts?: DailyProductSnapshotResponse["summary"]["topProducts"];
+    overallBestPerformingProduct?:
+      | DailyProductSnapshotResponse["summary"]["topProducts"][number]
+      | null;
+  };
+  dailySnapshots?: DailyProductSnapshotResponse["dailySnapshots"];
+  dailySalesSnapshots?: DailyProductSnapshotResponse["dailySnapshots"];
+};
+
+function normalizeProductSnapshotResponse(
+  payload: ProductSnapshotPayload,
+  params: DateRangeParams
+): DailyProductSnapshotResponse {
+  const summary: NonNullable<ProductSnapshotPayload["summary"]> =
+    payload.summary || {};
+  const topProducts =
+    summary.topProducts ||
+    (summary.overallBestPerformingProduct
+      ? [summary.overallBestPerformingProduct]
+      : []);
+
+  return {
+    period: payload.period || {
+      from: params.fromDate || "",
+      to: params.toDate || "",
+    },
+    summary: {
+      totalSuccessfulTopups: summary.totalSuccessfulTopups || 0,
+      totalReceivedTransactions: summary.totalReceivedTransactions || 0,
+      topProducts,
+    },
+    dailySnapshots: (
+      payload.dailySnapshots || payload.dailySalesSnapshots || []
+    ).map((snapshot) => ({
+      ...snapshot,
+      products: snapshot.products || [],
+    })),
+  };
+}
+
+function normalizeProductSnapshotApiResponse(
+  response: ApiResponse<ProductSnapshotPayload>,
+  params: DateRangeParams
+): ApiResponse<DailyProductSnapshotResponse> {
+  return {
+    ...response,
+    data: response.data
+      ? normalizeProductSnapshotResponse(response.data, params)
+      : response.data,
+  };
+}
+
 export const adminAnalyticsService = {
   /**
    * Get key business metrics (ARPU, LTV, Churn, Paying Users)
@@ -153,20 +210,21 @@ export const adminAnalyticsService = {
     params: DateRangeParams
   ): Promise<ApiResponse<DailyProductSnapshotResponse>> => {
     try {
-      const response = await apiClient.get<
-        ApiResponse<DailyProductSnapshotResponse>
-      >(`${BASE_PATH}/topup/products/daily-snapshot`, {
-        params,
-      });
-      return response.data;
+      const response = await apiClient.get<ApiResponse<ProductSnapshotPayload>>(
+        `${BASE_PATH}/topup/products/daily-snapshot`,
+        {
+          params,
+        }
+      );
+      return normalizeProductSnapshotApiResponse(response.data, params);
     } catch (error) {
       if (isAxiosError(error) && error.response?.status === 404) {
         const fallbackResponse = await apiClient.get<
-          ApiResponse<DailyProductSnapshotResponse>
+          ApiResponse<ProductSnapshotPayload>
         >(`${BASE_PATH}/topups/products/daily-snapshot`, {
           params,
         });
-        return fallbackResponse.data;
+        return normalizeProductSnapshotApiResponse(fallbackResponse.data, params);
       }
 
       throw error;
